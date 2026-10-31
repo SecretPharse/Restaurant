@@ -13,7 +13,7 @@ body {
 }
 .popup-login {
   position: absolute;
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -24,6 +24,7 @@ body {
   font-family: "Manrope";
   gap: 1.5rem;
   min-width: 40rem;
+  font-weight: 500;
 }
 .popup-login .top {
   display: flex;
@@ -95,6 +96,10 @@ body {
   text-align: center;
   padding: 8px;
   border-radius: 10px;
+  font-weight: 550;
+}
+.bottom .login:active {
+    transform: scale(.99);
 }
 .to-register {
   text-align: center;
@@ -103,9 +108,12 @@ body {
   color: #4338ca;
   cursor: pointer;
 }
+.link:hover {
+    text-decoration: underline;
+}
 .popup-register {
   position: absolute;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -116,6 +124,7 @@ body {
   font-family: "Manrope";
   gap: 1.5rem;
   min-width: 40rem;
+  font-weight: 500;
 }
 .popup-register .top {
   display: flex;
@@ -175,6 +184,10 @@ body {
   text-align: center;
   padding: 8px;
   border-radius: 10px;
+  font-weight: 550;
+}
+.bottom .register:active {
+    transform: scale(.99);
 }
 .to-login {
   text-align: center;
