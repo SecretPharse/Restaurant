@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="landing-page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="popup-login" id="popup-login">
+        <div class="top">
+            <span class="text1">Selamat Datang Kembali</span>
+            <span class="text2">Masuk ke akun anda untuk melanjutkan</span>
+        </div>
+        <div class="body">
+            <div class="email">
+                <span>Alamat Email</span>
+                <input type="email" id="email-login" autocomplete="false" placeholder="Email">
+            </div>
+            <div class="password">
+                <span>Kata sandi</span>
+                <input type="password" id="password-login" placeholder="Kata sandi">
+            </div>
+        </div>
+        <div class="bottom">
+            <span>Dengan mengklik masuk anda setuju dengan <span class="link">Syarat & Ketentuan</span></span>
+            <div class="login">Masuk ke Akun</div>
+        </div>
+        <span class="to-register">Belum punya akun? <span class="link" id="to-register">Daftar sekarang</span></span>
+    </div>
+    <div class="popup-register" id="popup-register">
+        <div class="top">
+            <span class="text1">Buat Akun Baru</span>
+            <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
+        </div>
+        <div class="body">
+            <div class="username">
+                <span>Nama Restaurant</span>
+                <input type="text" autocomplete="false" placeholder="Nama">
+            </div>
+            <div class="email">
+                <span>Alamat Email</span>
+                <input type="email" autocomplete="false" placeholder="Email">
+            </div>
+            <div class="password">
+                <span>Kata Sandi</span>
+                <input type="password" autocomplete="false" placeholder="Kata sandi">
+            </div>
+            <div class="password-confirmation">
+                <span>Konfirmasi Kata Sandi</span>
+                <input type="password" autocomplete="false" placeholder="Konfirmasi kata sandi">
+            </div>
+        </div>
+        <div class="bottom">
+            <span>Dengan mengklik Daftar saya menyetujui <span class="link">Syarat & Ketentuan</span></span>
+            <div class="register">Daftar Akun Baru</div>
+        </div>
+        <span class="to-login">Sudah memiliki akun? <span class="link" id="to-login">Masuk di sini</span></span>
+    </div>
+</body>
+<script type="module" src="script.js"></script>
+
+</html>
