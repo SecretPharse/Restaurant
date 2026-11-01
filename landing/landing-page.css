@@ -373,7 +373,7 @@ body {
   width: 100%;
 }
 .popup-register-page2 .bottom .register:active {
-  transform: scale(.99);
+  transform: scale(0.99);
 }
 
 /* OTP */
@@ -468,6 +468,8 @@ body {
 .bottom .back-register:hover {
   text-decoration: underline;
 }
+
+/* Reset Password */
 .popup-reset-password {
   position: absolute;
   display: none;
@@ -494,17 +496,31 @@ body {
   border-radius: 10px;
   gap: 1.5rem;
 }
-.container .body {
+.popup-reset-password .container .top {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.popup-reset-password .container .top .text1 {
+  font-size: 38px;
+  font-weight: 600;
+}
+.popup-reset-password .container .top .text2 {
+  color: #505050;
+  font-size: 16px;
+  font-weight: 500;
+}
+.popup-reset-password .container .body {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.body .new-password {
+.popup-reset-password .body .new-password {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.new-password input {
+.popup-reset-password .body .new-password input {
   font-size: 16px;
   padding: 10px;
   outline: none;

@@ -1,11 +1,19 @@
 document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("popup-login").style.display = "flex";
-  document.getElementById("popup-register").style.display = "none";
+  document.getElementById("popup-register-page1").style.display = "none";
 });
 document.getElementById("to-register").addEventListener("click", () => {
   document.getElementById("popup-login").style.display = "none";
-  document.getElementById("popup-register").style.display = "flex";
+  document.getElementById("popup-register-page1").style.display = "flex";
 });
+document.getElementById("next-to-page2").addEventListener("click", () => {
+  document.getElementById("popup-register-page1").style.display = "none";
+  document.getElementById("popup-register-page2").style.display = "flex";
+})
+document.getElementById("back-to-page1").addEventListener("click", () => {
+  document.getElementById("popup-register-page1").style.display = "flex";
+  document.getElementById("popup-register-page2").style.display = "none";
+})
 document.getElementById("register").addEventListener("click", () => {
   document.getElementById("popup-OTP").style.display = "flex";
 });

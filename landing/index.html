@@ -39,7 +39,7 @@
     </div>
 
     <!-- Register Page 1-->
-    <div class="popup-register-page1" id="popup-register">
+    <div class="popup-register-page1" id="popup-register-page1">
         <div class="top">
             <span class="text1">Formulir Pendaftaran</span>
             <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
@@ -63,13 +63,13 @@
             </div>
         </div>
         <div class="bottom">
-            <div class="next" id="next">Lanjut</div>
+            <div class="next" id="next-to-page2">Lanjut</div>
         </div>
         <span class="to-login">Sudah memiliki akun? <span class="link" id="to-login">Masuk di sini</span></span>
     </div>
 
     <!-- Register Page 2 -->
-    <div class="popup-register-page2">
+    <div class="popup-register-page2" id="popup-register-page2">
         <div class="top">
             <span class="text1">Formulir Pendaftaran</span>
             <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
@@ -93,21 +93,21 @@
                 <span>Kata Sandi</span>
                 <div class="placeholder">
                     <input type="text" placeholder="Kata Sandi">
-                    <img src="assets/visibility_off.svg" alt="">
+                    <img src="assets/visibility_off.svg" id="eye-icon-register" alt="">
                 </div>
             </div>
             <div class="confirmation-password">
                 <span>Konfirmasi kata Sandi</span>
                 <div class="placeholder">
                     <input type="text" placeholder="Konfimasi kata Sandi">
-                    <img src="assets/visibility_off.svg" alt="">
+                    <img src="assets/visibility_off.svg" id="eye-icon-confirmation" alt="">
                 </div>
             </div>
             <div class="bottom">
                 <span>Dengan Mengklik Daftar Saya Menyetujui <span class="link">Syarat & Ketentuan</span></span>
-                <div class="register">Daftar Akun Baru</div>
+                <div class="register" id="register">Daftar Akun Baru</div>
             </div>
-            <span class="link" style="text-align: center;">Kembali</span>
+            <span id="back-to-page1" class="link" style="text-align: center;">Kembali</span>
         </div>
     </div>
 
@@ -138,6 +138,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Reset Password -->
     <div class="popup-reset-password" id="popup-reset-password">
         <div class="container">
             <div class="top">
