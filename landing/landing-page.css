@@ -267,6 +267,12 @@ body {
 }
 .popup-register-page2 .body .time {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+.popup-register-page2 .body .times {
+  display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;

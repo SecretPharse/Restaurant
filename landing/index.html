@@ -82,18 +82,22 @@
         </div>
         <div class="body">
             <div class="time">
-                <div class="open">
-                    <span>Jam Buka</span>
-                    <input type="time" id="open-time-register">
+                <div class="times">
+                    <div class="open">
+                        <span>Jam Buka</span>
+                        <input type="time" id="open-time-register">
+                    </div>
+                    <div class="close">
+                        <span>Jam Tutup</span>
+                        <input type="time" id="close-time-register">
+                    </div>
                 </div>
-                <div class="close">
-                    <span>Jam Tutup</span>
-                    <input type="time" id="close-time-register">
-                </div>
+                <span id="alert-time-register"></span>
             </div>
             <div class="worker">
                 <span>Jumlah Pekerja</span>
                 <input type="number" id="num-worker-register" placeholder="Jumlah seluruh pekerja di lokasi">
+                <span id="alert-worker-register"></span>
             </div>
             <div class="password">
                 <span>Kata Sandi</span>
@@ -101,6 +105,7 @@
                     <input type="password" id="password-register" placeholder="Kata Sandi">
                     <img src="assets/visibility_off.svg" id="eye-icon-register" alt="">
                 </div>
+                <span id="alert-password-register"></span>
             </div>
             <div class="confirmation-password">
                 <span>Konfirmasi kata Sandi</span>
@@ -108,6 +113,7 @@
                     <input type="password" id="confirmation-password" placeholder="Konfimasi kata Sandi">
                     <img src="assets/visibility_off.svg" id="eye-icon-confirmation" alt="">
                 </div>
+                <span id="alert-confirmation-password-register"></span>
             </div>
             <div class="bottom">
                 <span>Dengan Mengklik Daftar Saya Menyetujui <span class="link">Syarat & Ketentuan</span></span>
