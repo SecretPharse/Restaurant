@@ -22,6 +22,7 @@
             <div class="email">
                 <span>Alamat Email</span>
                 <input type="email" id="email-login" autocomplete="none" placeholder="Email">
+                <span id="alert-email-login"></span>
             </div>
             <div class="password">
                 <span>Kata Sandi</span>
@@ -29,6 +30,7 @@
                     <input type="password" id="password-login" placeholder="Kata sandi" autocomplete="none">
                     <img id="eye-icon-login" src="assets/visibility_off.svg" alt="">
                 </div>
+                <span id="alert-password-login"></span>
             </div>
         </div>
         <div class="bottom">
@@ -47,19 +49,23 @@
         <div class="body">
             <div class="name">
                 <span>Nama Restoran</span>
-                <input type="text" autocomplete="none" placeholder="Contoh: Krusty Krab, Chambucket">
+                <input type="text" id="name-register" autocomplete="none" placeholder="Contoh: Krusty Krab, Chambucket">
+                <span id="alert-name-register"></span>
             </div>
             <div class="email">
                 <span>Alamat Email</span>
-                <input type="email" autocomplete="none" placeholder="Email">
+                <input type="email" id="email-register" autocomplete="none" placeholder="Email">
+                <span id="alert-email-register"></span>
             </div>
             <div class="telp">
                 <span>No.telp (opsional)</span>
-                <input type="number" autocomplete="none" placeholder="No.telp">
+                <input type="number" id="telp-register" autocomplete="none" placeholder="No.telp">
+                <span id="alert-telp-register"></span>
             </div>
             <div class="address">
                 <span>Alamat tempat</span>
-                <input type="text" autocomplete="none" placeholder="Alamat tempat">
+                <input type="text" id="address-register" autocomplete="none" placeholder="Alamat tempat">
+                <span id="alert-address-register"></span>
             </div>
         </div>
         <div class="bottom">
@@ -78,28 +84,28 @@
             <div class="time">
                 <div class="open">
                     <span>Jam Buka</span>
-                    <input type="time">
+                    <input type="time" id="open-time-register">
                 </div>
                 <div class="close">
                     <span>Jam Tutup</span>
-                    <input type="time">
+                    <input type="time" id="close-time-register">
                 </div>
             </div>
             <div class="worker">
                 <span>Jumlah Pekerja</span>
-                <input type="number" placeholder="Jumlah seluruh pekerja di lokasi">
+                <input type="number" id="num-worker-register" placeholder="Jumlah seluruh pekerja di lokasi">
             </div>
             <div class="password">
                 <span>Kata Sandi</span>
                 <div class="placeholder">
-                    <input type="text" placeholder="Kata Sandi">
+                    <input type="password" id="password-register" placeholder="Kata Sandi">
                     <img src="assets/visibility_off.svg" id="eye-icon-register" alt="">
                 </div>
             </div>
             <div class="confirmation-password">
                 <span>Konfirmasi kata Sandi</span>
                 <div class="placeholder">
-                    <input type="text" placeholder="Konfimasi kata Sandi">
+                    <input type="password" id="confirmation-password" placeholder="Konfimasi kata Sandi">
                     <img src="assets/visibility_off.svg" id="eye-icon-confirmation" alt="">
                 </div>
             </div>
@@ -120,7 +126,7 @@
             </div>
             <div class="body">
                 <div class="input">
-                    <input type="text" inputmode="numeric" maxlength="6"
+                    <input id="OTP" type="text" inputmode="numeric" maxlength="6"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
                     <div class="re-send">Kirim ulang</div>
                 </div>
@@ -148,22 +154,21 @@
             </div>
             <div class="body">
                 <div class="input">
-                    <input type="text" inputmode="numeric" maxlength="6"
+                    <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
                     <div class="re-send">Kirim ulang</div>
                 </div>
                 <div class="new-password">
                     <span>Kata Sandi baru</span>
                     <div class="placeholder">
-                        <input type="password" placeholder="Masukan kata sandi baru" id="input-new-password">
+                        <input type="password" placeholder="Masukan kata sandi baru" id="new-password">
                         <img id="eye-new-password" src="assets/visibility_off.svg" alt="">
                     </div>
                 </div>
                 <div class="confirmation-new-password">
                     <span>Konfirmasi Kata Sandi baru</span>
                     <div class="placeholder">
-                        <input type="password" placeholder="Konfirmasi kata sandi baru"
-                            id="input-confirmation-new-password">
+                        <input type="password" placeholder="Konfirmasi kata sandi baru" id="confirmation-new-password">
                         <img id="eye-confirmation-new-password" src="assets/visibility_off.svg" alt="">
                     </div>
                 </div>
@@ -172,7 +177,7 @@
                 <div class="verify">
                     <span>Verifikasi & Perbarui</span>
                 </div>
-                <span class="back-register" id="back-login">Kembali ke form Pendaftaran</span>
+                <span class="back-register" id="back-login">Kembali</span>
             </div>
         </div>
     </div>
