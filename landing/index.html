@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!-- Login -->
     <div class="popup-login" id="popup-login">
         <div class="top">
             <span class="text1">Selamat Datang Kembali</span>
@@ -36,13 +37,15 @@
         </div>
         <span class="to-register">Belum punya akun? <span class="link" id="to-register">Daftar sekarang</span></span>
     </div>
-    <div class="popup-register" id="popup-register">
+
+    <!-- Register Page 1-->
+    <div class="popup-register-page1" id="popup-register">
         <div class="top">
-            <span class="text1">Buat Akun Baru</span>
+            <span class="text1">Formulir Pendaftaran</span>
             <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
         </div>
         <div class="body">
-            <div class="username">
+            <div class="name">
                 <span>Nama Restoran</span>
                 <input type="text" autocomplete="none" placeholder="Contoh: Krusty Krab, Chambucket">
             </div>
@@ -50,28 +53,65 @@
                 <span>Alamat Email</span>
                 <input type="email" autocomplete="none" placeholder="Email">
             </div>
-            <div class="password">
-                <span>Kata Sandi</span>
-                <div class="placeholder">
-                    <input type="password" id="password-register" autocomplete="none" placeholder="Kata sandi">
-                    <img id="eye-icon-register" src="assets/visibility_off.svg" alt="">
-                </div>
+            <div class="telp">
+                <span>No.telp (opsional)</span>
+                <input type="number" autocomplete="none" placeholder="No.telp">
             </div>
-            <div class="password-confirmation">
-                <span>Konfirmasi Kata Sandi</span>
-                <div class="placeholder">
-                    <input type="password" id="confirmation-password" autocomplete="none"
-                        placeholder="Konfirmasi kata sandi">
-                    <img id="eye-icon-confirmation" src="assets/visibility_off.svg" alt="">
-                </div>
+            <div class="address">
+                <span>Alamat tempat</span>
+                <input type="text" autocomplete="none" placeholder="Alamat tempat">
             </div>
         </div>
         <div class="bottom">
-            <span>Dengan mengklik Daftar saya menyetujui <span class="link">Syarat & Ketentuan</span></span>
-            <div class="register" id="register">Daftar Akun Baru</div>
+            <div class="next" id="next">Lanjut</div>
         </div>
         <span class="to-login">Sudah memiliki akun? <span class="link" id="to-login">Masuk di sini</span></span>
     </div>
+
+    <!-- Register Page 2 -->
+    <div class="popup-register-page2">
+        <div class="top">
+            <span class="text1">Formulir Pendaftaran</span>
+            <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
+        </div>
+        <div class="body">
+            <div class="time">
+                <div class="open">
+                    <span>Jam Buka</span>
+                    <input type="time">
+                </div>
+                <div class="close">
+                    <span>Jam Tutup</span>
+                    <input type="time">
+                </div>
+            </div>
+            <div class="worker">
+                <span>Jumlah Pekerja</span>
+                <input type="number" placeholder="Jumlah seluruh pekerja di lokasi">
+            </div>
+            <div class="password">
+                <span>Kata Sandi</span>
+                <div class="placeholder">
+                    <input type="text" placeholder="Kata Sandi">
+                    <img src="assets/visibility_off.svg" alt="">
+                </div>
+            </div>
+            <div class="confirmation-password">
+                <span>Konfirmasi kata Sandi</span>
+                <div class="placeholder">
+                    <input type="text" placeholder="Konfimasi kata Sandi">
+                    <img src="assets/visibility_off.svg" alt="">
+                </div>
+            </div>
+            <div class="bottom">
+                <span>Dengan Mengklik Daftar Saya Menyetujui <span class="link">Syarat & Ketentuan</span></span>
+                <div class="register">Daftar Akun Baru</div>
+            </div>
+            <span class="link" style="text-align: center;">Kembali</span>
+        </div>
+    </div>
+
+    <!-- OTP -->
     <div class="popup-OTP" id="popup-OTP">
         <div class="container">
             <div class="top">
@@ -120,7 +160,8 @@
                 <div class="confirmation-new-password">
                     <span>Konfirmasi Kata Sandi baru</span>
                     <div class="placeholder">
-                        <input type="password" placeholder="Konfirmasi kata sandi baru" id="input-confirmation-new-password">
+                        <input type="password" placeholder="Konfirmasi kata sandi baru"
+                            id="input-confirmation-new-password">
                         <img id="eye-confirmation-new-password" src="assets/visibility_off.svg" alt="">
                     </div>
                 </div>
