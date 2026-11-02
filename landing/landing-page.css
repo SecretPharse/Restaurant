@@ -434,23 +434,23 @@ body {
   border-radius: 10px;
   gap: 1.5rem;
 }
-.container .top {
+.popup-OTP .container .top {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.container .body {
+.popup-OTP .container .body {
   display: flex;
   align-content: center;
   gap: 5px;
 }
-.body .input {
+.popup-OTP .container .body .input {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;
 }
-.body .input input {
+.popup-OTP .container .body .input input {
   width: 70%;
   border: 1px solid #4338ca;
   border-radius: 10px;
@@ -460,7 +460,7 @@ body {
   background: #f2f4f6;
   outline: none;
 }
-.input .re-send {
+.popup-OTP .container .body .input .re-send {
   width: 30%;
   background-color: #4338ca;
   color: #ffffff;
@@ -470,7 +470,7 @@ body {
   border-radius: 10px;
   user-select: none;
 }
-.input .re-send:active {
+.popup-OTP .container .body .input .re-send:active {
   transform: scale(0.99);
 }
 .popup-OTP .bottom {
@@ -479,26 +479,18 @@ body {
   text-align: center;
   gap: 1rem;
 }
-.bottom .verify {
+.popup-OTP .bottom .verify {
   background-color: #4338ca;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 10px;
   border-radius: 10px;
   user-select: none;
 }
-.bottom .verify:active {
+.popup-OTP .bottom .verify:active {
   transform: scale(0.99);
-}
-.bottom .back-register {
-  color: #505050;
-  cursor: pointer;
-  user-select: none;
-}
-.bottom .back-register:hover {
-  text-decoration: underline;
 }
 
 /* Reset Password */
@@ -547,6 +539,35 @@ body {
   flex-direction: column;
   gap: 10px;
 }
+.popup-reset-password .container .body .input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+.popup-reset-password .container .body .input input {
+  width: 70%;
+  border: 1px solid #4338ca;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: "Manrope";
+  font-size: 16px;
+  background: #f2f4f6;
+  outline: none;
+}
+.popup-reset-password .container .body .input .re-send {
+  width: 30%;
+  background-color: #4338ca;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-weight: 550;
+  border-radius: 10px;
+  user-select: none;
+}
+.popup-reset-password .container .body .input .re-send:active {
+  transform: scale(0.99);
+}
 .popup-reset-password .body .new-password {
   display: flex;
   flex-direction: column;
@@ -582,4 +603,17 @@ body {
   flex-direction: column;
   text-align: center;
   gap: 1rem;
+}
+.popup-reset-password .bottom .verify {
+  background-color: #4338ca;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 10px;
+  user-select: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
 }

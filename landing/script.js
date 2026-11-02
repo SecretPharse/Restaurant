@@ -153,6 +153,15 @@ document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
   document.getElementById("popup-OTP").style.display = "none";
 });
+document
+  .getElementById("verification-new-password")
+  .addEventListener("click", () => {
+    var code = document.getElementById("OTP-reset-password").value;
+    var password = document.getElementById("new-password").value;
+    var confirmation = document.getElementById(
+      "confirmation-new-password",
+    ).value;
+  });
 document.getElementById("back-login").addEventListener("click", () => {
   document.getElementById("OTP-reset-password").value = "";
   document.getElementById("new-password").value = "";
