@@ -16,6 +16,7 @@ document.getElementById("login").addEventListener("click", () => {
     password_alert.textContent = "Kata Sandi kosong";
   }
   if (email.trim() != "" && password.trim() != "") {
+    document.getElementById("login").disabled = true;
     document.getElementById("alert-email-login").textContent = "";
     document.getElementById("alert-password-login").textContent = "";
     document.getElementById("text-btn-login").hidden = true;
@@ -30,6 +31,12 @@ document.getElementById("to-register").addEventListener("click", () => {
   document.getElementById("popup-register-page1").style.display = "flex";
 });
 document.getElementById("next-to-page2").addEventListener("click", () => {
+  var name = document.getElementById("name-register").value;
+  var email = document.getElementById("email-register").value;
+  var telp = document.getElementById("telp-register").value;
+  var address = document.getElementById("address-register").value;
+
+
   document.getElementById("popup-register-page1").style.display = "none";
   document.getElementById("popup-register-page2").style.display = "flex";
 });
