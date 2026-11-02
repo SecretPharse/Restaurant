@@ -6,26 +6,22 @@ document.getElementById("login").addEventListener("click", () => {
   var password = document.getElementById("password-login").value;
   var email_alert = document.getElementById("alert-email-login");
   var password_alert = document.getElementById("alert-password-login");
+  email_alert.textContent = "";
+  password_alert.textContent = "";
 
-  if (email.trim() == "" && password.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
+  if (email.trim() == "") {
     email_alert.textContent = "Email kosong";
-    password_alert.textContent = "Kata Sandi kodong";
-  } else if (email.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
-    email_alert.textContent = "Email kosong";
-  } else if (password.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
+  }
+  if (password.trim() == "") {
     password_alert.textContent = "Kata Sandi kosong";
-  } else {
+  }
+  if (email.trim() != "" && password.trim() != "") {
     document.getElementById("alert-email-login").textContent = "";
     document.getElementById("alert-password-login").textContent = "";
     document.getElementById("text-btn-login").hidden = true;
     document.getElementById("spinner-login").hidden = false;
   }
+  return;
 });
 document.getElementById("to-register").addEventListener("click", () => {
   document.getElementById("email-login").value = "";
@@ -126,4 +122,3 @@ document
       eye.src = "assets/visibility_off.svg";
     }
   });
-
