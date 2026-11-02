@@ -100,3 +100,29 @@ document
       eye.src = "assets/visibility_off.svg";
     }
   });
+document.getElementById("login").addEventListener("click", () => {
+  var email = document.getElementById("email-login").value;
+  var password = document.getElementById("password-login").value;
+  var email_alert = document.getElementById("alert-email-login");
+  var password_alert = document.getElementById("alert-password-login");
+
+  if (email.trim() == "" && password.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    email_alert.textContent = "Email kosong";
+    password_alert.textContent = "Kata Sandi kodong";
+  } else if (email.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    email_alert.textContent = "Email kosong";
+  } else if (password.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    password_alert.textContent = "Kata Sandi kosong";
+  } else {
+    document.getElementById("alert-email-login").textContent = "";
+    document.getElementById("alert-password-login").textContent = "";
+    document.getElementById("text-btn-login").hidden = true;
+    document.getElementById("spinner-login").hidden = false;
+  }
+});

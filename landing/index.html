@@ -22,7 +22,7 @@
             <div class="email">
                 <span>Alamat Email</span>
                 <input type="email" id="email-login" autocomplete="none" placeholder="Email">
-                <span id="alert-email-login"></span>
+                <span class="alert-text" id="alert-email-login"></span>
             </div>
             <div class="password">
                 <span>Kata Sandi</span>
@@ -30,12 +30,15 @@
                     <input type="password" id="password-login" placeholder="Kata sandi" autocomplete="none">
                     <img id="eye-icon-login" src="assets/visibility_off.svg" alt="">
                 </div>
-                <span id="alert-password-login"></span>
+                <span class="alert-text" id="alert-password-login"></span>
             </div>
         </div>
         <div class="bottom">
             <span class="link" style="margin: 0 0 0 auto;" id="reset-password">Lupa kata sandi?</span>
-            <div class="login">Masuk ke Akun</div>
+            <div class="login" id="login">
+                <span id="text-btn-login">Masuk ke Akun</span>
+                <span class="spinner" id="spinner-login" hidden></span>
+            </div>
         </div>
         <span class="to-register">Belum punya akun? <span class="link" id="to-register">Daftar sekarang</span></span>
     </div>

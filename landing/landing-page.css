@@ -29,6 +29,24 @@ body {
 .link:hover {
   text-decoration: underline;
 }
+.spinner {
+  border: 3px solid #FFFFFF;
+  border-top-color: #948bf7;
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+}
+.alert-text {
+  color: red;
+}
 
 /* Login */
 .popup-login {
@@ -102,10 +120,14 @@ body {
 .popup-login .bottom .login {
   background-color: #4338ca;
   color: #ffffff;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 8px;
   border-radius: 10px;
+  font-size: 16px;
   font-weight: 550;
+  user-select: none;
 }
 .popup-login .bottom .login:active {
   transform: scale(0.99);
