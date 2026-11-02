@@ -158,9 +158,35 @@ document
   .addEventListener("click", () => {
     var code = document.getElementById("OTP-reset-password").value;
     var password = document.getElementById("new-password").value;
-    var confirmation = document.getElementById(
-      "confirmation-new-password",
-    ).value;
+    var verify = document.getElementById("confirmation-new-password").value;
+
+    var alert_code = document.getElementById("alert-otp-re-password");
+    var alert_new_password = document.getElementById("alert-re-password");
+    var alert_verify_password = document.getElementById(
+      "alert-verify-password",
+    );
+
+    alert_code.textContent = "";
+    alert_new_password.textContent = "";
+    alert_verify_password.textContent = "";
+
+    if (code.trim() == "") {
+      alert_code.textContent = "Code OTP kosong";
+    }
+    if (password.trim() == "") {
+      alert_new_password.textContent = "Password baru kosong";
+    }
+    if (verify.trim() == "") {
+      alert_verify_password.textContent = "Confirmasi Password anda";
+    }
+
+    if (code.trim() != "" && password.trim() != "" && verify.trim() != "") {
+      if (password != verify) {
+        alert_verify_password.textContent = "Password tidak sama";
+        return;
+      }
+    }
+    return;
   });
 document.getElementById("back-login").addEventListener("click", () => {
   document.getElementById("OTP-reset-password").value = "";

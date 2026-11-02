@@ -539,13 +539,18 @@ body {
   flex-direction: column;
   gap: 10px;
 }
-.popup-reset-password .container .body .input {
+.popup-reset-password .container .body .otp {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.popup-reset-password .container .body .otp .input {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;
 }
-.popup-reset-password .container .body .input input {
+.popup-reset-password .container .body .otp .input input {
   width: 70%;
   border: 1px solid #4338ca;
   border-radius: 10px;
@@ -555,7 +560,7 @@ body {
   background: #f2f4f6;
   outline: none;
 }
-.popup-reset-password .container .body .input .re-send {
+.popup-reset-password .container .body .otp .input .re-send {
   width: 30%;
   background-color: #4338ca;
   color: #ffffff;
@@ -565,7 +570,7 @@ body {
   border-radius: 10px;
   user-select: none;
 }
-.popup-reset-password .container .body .input .re-send:active {
+.popup-reset-password .container .body .otp .input .re-send:active {
   transform: scale(0.99);
 }
 .popup-reset-password .body .new-password {

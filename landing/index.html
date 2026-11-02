@@ -168,21 +168,25 @@
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
                         <div class="re-send">Kirim</div>
                     </div>
-                    <span class="alert-text"></span>
+                    <span class="alert-text" id="alert-otp-re-password"></span>
                 </div>
                 <div class="new-password">
                     <span>Kata Sandi baru</span>
                     <div class="placeholder">
-                        <input id="new-password" type="password" placeholder="Masukan kata sandi baru" id="new-password">
+                        <input id="new-password" type="password" placeholder="Masukan kata sandi baru"
+                            id="new-password">
                         <img id="eye-new-password" src="assets/visibility_off.svg" alt="">
                     </div>
+                    <span class="alert-text" id="alert-re-password"></span>
                 </div>
                 <div class="confirmation-new-password">
                     <span>Konfirmasi Kata Sandi baru</span>
                     <div class="placeholder">
-                        <input id="confirmation-new-password" type="password" placeholder="Konfirmasi kata sandi baru" id="confirmation-new-password">
+                        <input id="confirmation-new-password" type="password" placeholder="Konfirmasi kata sandi baru"
+                            id="confirmation-new-password">
                         <img id="eye-confirmation-new-password" src="assets/visibility_off.svg" alt="">
                     </div>
+                    <span class="alert-text" id="alert-verify-password"></span>
                 </div>
             </div>
             <div class="bottom">
