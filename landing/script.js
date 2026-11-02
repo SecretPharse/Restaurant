@@ -103,19 +103,47 @@ document.getElementById("register").addEventListener("click", () => {
     "confirmation-password",
   ).value;
 
-  var open_alert = document.getElementById("alert-time-register");
+  var time_alert = document.getElementById("alert-time-register");
   var worker_alert = document.getElementById("alert-worker-register");
   var password_alert = document.getElementById("alert-password-register");
   var confirmation_alert = document.getElementById(
     "alert-confirmation-password-register",
   );
 
-  open_alert.textContent = "";
+  time_alert.textContent = "";
   worker_alert.textContent = "";
   password_alert.textContent = "";
   confirmation_alert.textContent = "";
 
-  document.getElementById("popup-OTP").style.display = "flex";
+  if (open.trim() == "") {
+    time_alert.textContent = "Waktu buka kosong";
+  } else if (close.trim() == "") {
+    time_alert.textContent = "Waktu tutup kosong";
+  }
+  if (worker.trim() == "") {
+    worker_alert.textContent = "Jumlah pekerja kosong";
+  }
+  if (password.trim() == "") {
+    password_alert.textContent = "Password Kosong";
+  }
+  if (confirmation_password.trim() == "") {
+    confirmation_alert.textContent = "Konfirmasi password anda";
+  }
+
+  if (
+    open.trim() != "" &&
+    close.trim() != "" &&
+    worker.trim() != "" &&
+    password.trim() != "" &&
+    confirmation_password.trim() != ""
+  ) {
+    if (password != confirmation_password) {
+      confirmation_alert.textContent = "Password Salah";
+      return;
+    }
+    document.getElementById("popup-OTP").style.display = "flex";
+  }
+  return;
 });
 document.getElementById("back-to-page1").addEventListener("click", () => {
   document.getElementById("popup-register-page2").style.display = "none";
