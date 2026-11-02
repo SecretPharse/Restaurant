@@ -85,7 +85,6 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("num-worker-register").value = "";
   document.getElementById("password-register").value = "";
   document.getElementById("confirmation-password").value = "";
-  document.getElementById("popup-login").style.display = "flex";
 
   document.getElementById("alert-name-register").textContent = "";
   document.getElementById("alert-email-register").textContent = "";
@@ -93,13 +92,22 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("alert-address-register").textContent = "";
 
   document.getElementById("popup-register-page1").style.display = "none";
+  document.getElementById("popup-login").style.display = "flex";
 });
 document.getElementById("register").addEventListener("click", () => {
+  var open = document.getElementById("open-time-register").value;
+  var close = document.getElementById("close-time-register").value;
+  var worker = document.getElementById("num-worker-register").value;
+  var password = document.getElementById("password-register").value;
+  var confirmation_password = document.getElementById(
+    "confirmation-password",
+  ).value;
+
   document.getElementById("popup-OTP").style.display = "flex";
 });
 document.getElementById("back-to-page1").addEventListener("click", () => {
-  document.getElementById("popup-register-page1").style.display = "flex";
   document.getElementById("popup-register-page2").style.display = "none";
+  document.getElementById("popup-register-page1").style.display = "flex";
 });
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
