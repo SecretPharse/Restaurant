@@ -1,3 +1,42 @@
+document.getElementById("reset-password").addEventListener("click", () => {
+  document.getElementById("popup-reset-password").style.display = "flex";
+});
+document.getElementById("login").addEventListener("click", () => {
+  var email = document.getElementById("email-login").value;
+  var password = document.getElementById("password-login").value;
+  var email_alert = document.getElementById("alert-email-login");
+  var password_alert = document.getElementById("alert-password-login");
+
+  if (email.trim() == "" && password.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    email_alert.textContent = "Email kosong";
+    password_alert.textContent = "Kata Sandi kodong";
+  } else if (email.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    email_alert.textContent = "Email kosong";
+  } else if (password.trim() == "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
+    password_alert.textContent = "Kata Sandi kosong";
+  } else {
+    document.getElementById("alert-email-login").textContent = "";
+    document.getElementById("alert-password-login").textContent = "";
+    document.getElementById("text-btn-login").hidden = true;
+    document.getElementById("spinner-login").hidden = false;
+  }
+});
+document.getElementById("to-register").addEventListener("click", () => {
+  document.getElementById("email-login").value = "";
+  document.getElementById("password-login").value = "";
+  document.getElementById("popup-login").style.display = "none";
+  document.getElementById("popup-register-page1").style.display = "flex";
+});
+document.getElementById("next-to-page2").addEventListener("click", () => {
+  document.getElementById("popup-register-page1").style.display = "none";
+  document.getElementById("popup-register-page2").style.display = "flex";
+});
 document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("name-register").value = "";
   document.getElementById("email-register").value = "";
@@ -11,29 +50,16 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("popup-login").style.display = "flex";
   document.getElementById("popup-register-page1").style.display = "none";
 });
-document.getElementById("to-register").addEventListener("click", () => {
-  document.getElementById("email-login").value = "";
-  document.getElementById("password-login").value = "";
-  document.getElementById("popup-login").style.display = "none";
-  document.getElementById("popup-register-page1").style.display = "flex";
-});
-document.getElementById("next-to-page2").addEventListener("click", () => {
-  document.getElementById("popup-register-page1").style.display = "none";
-  document.getElementById("popup-register-page2").style.display = "flex";
+document.getElementById("register").addEventListener("click", () => {
+  document.getElementById("popup-OTP").style.display = "flex";
 });
 document.getElementById("back-to-page1").addEventListener("click", () => {
   document.getElementById("popup-register-page1").style.display = "flex";
   document.getElementById("popup-register-page2").style.display = "none";
 });
-document.getElementById("register").addEventListener("click", () => {
-  document.getElementById("popup-OTP").style.display = "flex";
-});
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
   document.getElementById("popup-OTP").style.display = "none";
-});
-document.getElementById("reset-password").addEventListener("click", () => {
-  document.getElementById("popup-reset-password").style.display = "flex";
 });
 document.getElementById("back-login").addEventListener("click", () => {
   document.getElementById("OTP-reset-password").value = "";
@@ -100,29 +126,4 @@ document
       eye.src = "assets/visibility_off.svg";
     }
   });
-document.getElementById("login").addEventListener("click", () => {
-  var email = document.getElementById("email-login").value;
-  var password = document.getElementById("password-login").value;
-  var email_alert = document.getElementById("alert-email-login");
-  var password_alert = document.getElementById("alert-password-login");
 
-  if (email.trim() == "" && password.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
-    email_alert.textContent = "Email kosong";
-    password_alert.textContent = "Kata Sandi kodong";
-  } else if (email.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
-    email_alert.textContent = "Email kosong";
-  } else if (password.trim() == "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
-    password_alert.textContent = "Kata Sandi kosong";
-  } else {
-    document.getElementById("alert-email-login").textContent = "";
-    document.getElementById("alert-password-login").textContent = "";
-    document.getElementById("text-btn-login").hidden = true;
-    document.getElementById("spinner-login").hidden = false;
-  }
-});
