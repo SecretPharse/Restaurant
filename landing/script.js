@@ -103,6 +103,18 @@ document.getElementById("register").addEventListener("click", () => {
     "confirmation-password",
   ).value;
 
+  var open_alert = document.getElementById("alert-time-register");
+  var worker_alert = document.getElementById("alert-worker-register");
+  var password_alert = document.getElementById("alert-password-register");
+  var confirmation_alert = document.getElementById(
+    "alert-confirmation-password-register",
+  );
+
+  open_alert.textContent = "";
+  worker_alert.textContent = "";
+  password_alert.textContent = "";
+  confirmation_alert.textContent = "";
+
   document.getElementById("popup-OTP").style.display = "flex";
 });
 document.getElementById("back-to-page1").addEventListener("click", () => {
