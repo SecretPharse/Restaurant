@@ -16,9 +16,9 @@ document.getElementById("login").addEventListener("click", () => {
     password_alert.textContent = "Kata Sandi kosong";
   }
   if (email.trim() != "" && password.trim() != "") {
+    email_alert.textContent = "";
+    password_alert.textContent = "";
     document.getElementById("login").disabled = true;
-    document.getElementById("alert-email-login").textContent = "";
-    document.getElementById("alert-password-login").textContent = "";
     document.getElementById("text-btn-login").hidden = true;
     document.getElementById("spinner-login").hidden = false;
   }
@@ -27,6 +27,8 @@ document.getElementById("login").addEventListener("click", () => {
 document.getElementById("to-register").addEventListener("click", () => {
   document.getElementById("email-login").value = "";
   document.getElementById("password-login").value = "";
+  document.getElementById("alert-email-login").textContent = "";
+  document.getElementById("alert-password-login").textContent = "";
   document.getElementById("popup-login").style.display = "none";
   document.getElementById("popup-register-page1").style.display = "flex";
 });
@@ -36,9 +38,42 @@ document.getElementById("next-to-page2").addEventListener("click", () => {
   var telp = document.getElementById("telp-register").value;
   var address = document.getElementById("address-register").value;
 
+  var name_alert = document.getElementById("alert-name-register");
+  var email_alert = document.getElementById("alert-email-register");
+  var telp_alert = document.getElementById("alert-telp-register");
+  var address_alert = document.getElementById("alert-address-register");
 
-  document.getElementById("popup-register-page1").style.display = "none";
-  document.getElementById("popup-register-page2").style.display = "flex";
+  name_alert.textContent = "";
+  email_alert.textContent = "";
+  telp_alert.textContent = "";
+  address_alert.textContent = "";
+
+  if (name.trim() == "") {
+    name_alert.textContent = "Nama kosong";
+  }
+  if (email.trim() == "") {
+    email_alert.textContent = "Email kosong";
+  }
+  if (telp.trim() == "") {
+    telp_alert.textContent = "Telpon kosong";
+  }
+  if (address.trim() == "") {
+    address_alert.textContent = "Alamat kosong";
+  }
+  if (
+    name.trim() != "" &&
+    email.trim() != "" &&
+    telp.trim() != "" &&
+    address.trim() != ""
+  ) {
+    name_alert.textContent = "";
+    email_alert.textContent = "";
+    telp_alert.textContent = "";
+    address_alert.textContent = "";
+    document.getElementById("popup-register-page1").style.display = "none";
+    document.getElementById("popup-register-page2").style.display = "flex";
+  }
+  return;
 });
 document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("name-register").value = "";
@@ -51,6 +86,12 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("password-register").value = "";
   document.getElementById("confirmation-password").value = "";
   document.getElementById("popup-login").style.display = "flex";
+
+  document.getElementById("alert-name-register").textContent = "";
+  document.getElementById("alert-email-register").textContent = "";
+  document.getElementById("alert-telp-register").textContent = "";
+  document.getElementById("alert-address-register").textContent = "";
+
   document.getElementById("popup-register-page1").style.display = "none";
 });
 document.getElementById("register").addEventListener("click", () => {
