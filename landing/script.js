@@ -155,7 +155,6 @@ document.getElementById("verify").addEventListener("click", () => { // Call Back
     document.getElementById("alert-otp").textContent = "Code Kosong";
     return
   }
-
 })
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
