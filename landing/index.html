@@ -134,14 +134,17 @@
                 <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda</span>
             </div>
             <div class="body">
-                <div class="input">
-                    <input id="OTP" type="text" inputmode="numeric" maxlength="6"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
-                    <div class="re-send">Kirim ulang</div>
+                <div class="otp">
+                    <div class="input">
+                        <input id="OTP" type="text" inputmode="numeric" maxlength="6"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
+                        <div class="re-send">Kirim ulang</div>
+                    </div>
+                    <span class="alert-text" id="alert-otp"></span>
                 </div>
             </div>
             <div class="bottom">
-                <div class="verify">
+                <div class="verify" id="verify">
                     <span>Verifikasi & Lanjutkan</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px"
                         fill="#FFFFFF">
@@ -166,7 +169,7 @@
                     <div class="input">
                         <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
-                        <div class="re-send">Kirim</div>
+                        <div class="re-send" id="re-send">Kirim</div>
                     </div>
                     <span class="alert-text" id="alert-otp-re-password"></span>
                 </div>

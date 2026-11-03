@@ -149,13 +149,28 @@ document.getElementById("back-to-page1").addEventListener("click", () => {
   document.getElementById("popup-register-page2").style.display = "none";
   document.getElementById("popup-register-page1").style.display = "flex";
 });
+document.getElementById("verify").addEventListener("click", () => { // Call Backend
+  var code = document.getElementById("OTP").value;
+  if (code.trim() == "") {
+    document.getElementById("alert-otp").textContent = "Code Kosong";
+    return
+  }
+
+})
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
   document.getElementById("popup-OTP").style.display = "none";
 });
+var count = 0;
+document.getElementById("re-send").addEventListener("click", () => { // Call Backend
+  count += 1;
+  if (count > 0) {
+    document.getElementById("re-send").textContent = "Kirim Ulang";
+  }
+});
 document
   .getElementById("verification-new-password")
-  .addEventListener("click", () => {
+  .addEventListener("click", () => { // Call backend
     var code = document.getElementById("OTP-reset-password").value;
     var password = document.getElementById("new-password").value;
     var verify = document.getElementById("confirmation-new-password").value;
@@ -188,7 +203,7 @@ document
     }
     return;
   });
-document.getElementById("back-login").addEventListener("click", () => {
+document.getElementById("back-login").addEventListener("click", () => { // Call Backend
   document.getElementById("OTP-reset-password").value = "";
   document.getElementById("new-password").value = "";
   document.getElementById("confirmation-new-password").value = "";
