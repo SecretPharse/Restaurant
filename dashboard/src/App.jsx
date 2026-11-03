@@ -128,7 +128,9 @@ function Dahsboard() {
                       <path d="M4.33,9H19.68L18.83,6H5.2L4.33,9ZM12,7.5ZM16.8,11H7.23L6.95,13h10.1L16.8,11ZM4,20l1.23-9H3q-0.5,0-0.79-0.4Q1.93,10.2 2.05,9.73l1.42-5Q3.58,4.4 3.83,4.2T4.43,4H19.58q0.35,0 0.6,0.2t0.35,0.52l1.43,5q0.13,0.47-0.16,0.88T21,11H18.8L20,20H18l-0.68-5H6.68L6,20H4Z" />
                     </svg>
                   </div>
-                  <span className="text2">0<span className="text3">Tersedia</span></span>
+                  <span className="text2">
+                    0<span className="text3">Tersedia</span>
+                  </span>
                 </div>
                 <div className="card">
                   <div className="text1">
@@ -143,7 +145,9 @@ function Dahsboard() {
                       <path d="M4,22q-0.82,0-1.41-0.59T2,20V9Q2,8.17 2.59,7.59T4,7H9V4Q9,3.17 9.59,2.59T11,2h2q0.83,0 1.41,0.59T15,4V7h5q0.83,0 1.41,0.59T22,9V20q0,0.82-0.59,1.41T20,22H4Zm0-2H20V9H15q0,0.82-0.59,1.41T13,11H11q-0.82,0-1.41-0.59T9,9H4V20Zm2-2h6V17.55q0-0.43-0.24-0.79T11.1,16.2q-0.5-0.22-1.01-0.34Q9.58,15.75 9,15.75q-0.57,0-1.09,0.11Q7.4,15.98 6.9,16.2q-0.42,0.2-0.66,0.56T6,17.55V18Zm8-1.5h4V15H14v1.5Zm-3.94-1.94q0.44-0.44 0.44-1.06t-0.44-1.06T9,12T7.94,12.44T7.5,13.5t0.44,1.06T9,15t1.06-0.44ZM14,13.5h4V12H14v1.5ZM11,9h2V4H11V9Zm1,5.5Z" />
                     </svg>
                   </div>
-                  <span className="text2">0<span className="text3">Bekerja</span></span>
+                  <span className="text2">
+                    0<span className="text3">Bekerja</span>
+                  </span>
                 </div>
                 <div className="card">
                   <div className="text1">
@@ -158,7 +162,9 @@ function Dahsboard() {
                       <path d="M15.3,16.7l1.4-1.4L13,11.6V7H11v5.4l4.3,4.3ZM12,22q-2.07,0-3.9-0.79q-1.82-0.79-3.17-2.14Q3.58,17.73 2.79,15.9T2,12Q2,9.92 2.79,8.1Q3.58,6.27 4.93,4.93Q6.28,3.57 8.1,2.79Q9.93,2 12,2t3.9,0.79t3.17,2.14q1.35,1.35 2.14,3.17Q22,9.92 22,12t-0.79,3.9t-2.14,3.17q-1.35,1.35-3.17,2.14T12,22Zm0-10Zm0,8q3.33,0 5.66-2.34T20,12q0-3.33-2.34-5.66T12,4Q8.68,4 6.34,6.34T4,12t2.34,5.66T12,20Z" />
                     </svg>
                   </div>
-                  <span className="text2">-:-<span className="text3">AM</span></span>
+                  <span className="text2">
+                    -:-<span className="text3">AM</span>
+                  </span>
                 </div>
                 <div className="card">
                   <div className="text1">
@@ -173,14 +179,25 @@ function Dahsboard() {
                       <path d="M12,21q-3.75,0-6.38-2.63T3,12T5.63,5.63T12,3q0.35,0 0.69,0.02q0.34,0.02 0.66,0.07q-1.03,0.73-1.64,1.89T11.1,7.5q0,2.25 1.57,3.82T16.5,12.9q1.38,0 2.53-0.61t1.88-1.64q0.05,0.33 0.07,0.66T21,12q0,3.75-2.63,6.38T12,21Zm0-2q2.2,0 3.95-1.21t2.55-3.16q-0.5,0.13-1,0.2t-1,0.08q-3.07,0-5.24-2.16Q9.1,10.58 9.1,7.5q0-0.5 0.08-1t0.2-1Q7.43,6.3 6.21,8.05T5,12q0,2.9 2.05,4.95T12,19Zm-0.25-6.75Z" />
                     </svg>
                   </div>
-                  <span className="text2">-:-<span className="text3">PM</span></span>
+                  <span className="text2">
+                    -:-<span className="text3">PM</span>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
           <div className="static">
             <div className="card">
-              <div className="circle"></div>
+              <div className="circle1"></div>
+            </div>
+            <div className="card">
+              <div className="circle2"></div>
+            </div>
+            <div className="card">
+              <div className="circle3"></div>
+            </div>
+            <div className="card">
+              <div className="circle4"></div>
             </div>
           </div>
         </div>
