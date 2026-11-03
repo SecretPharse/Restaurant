@@ -1,0 +1,54 @@
+.app {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+.navbar {
+    width: 16rem;
+    height: 100vh;
+    background-color: #FFFFFF;
+    border-right: 2px solid #EEEDF3;
+    padding: 5px 10px;
+}
+.navbar .space {
+    display: flex;
+    flex-direction: column;
+}
+.navbar .space .card {
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 550;
+    color: #858393;
+}
+.navbar .space .menus {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.navbar .space .menus .menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 20px;
+    font-weight: 450;
+    color: #464555;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+}
+.navbar .space .menus .menu-active {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3525CD;
+    cursor: pointer;
+    user-select: none;
+    background-color: #EFF4FF;
+    border-radius: 10px;
+}
+.navbar .space .menus .menu-active svg {
+    fill: #3525CD;
+}
