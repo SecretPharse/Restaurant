@@ -188,9 +188,13 @@ function Dahsboard() {
           </div>
           <div className="static">
             <div className="card">
+              <span className="text1">Total Pendapatan</span>
+              <span className="text2">Rp.0</span>
               <div className="circle1"></div>
             </div>
             <div className="card">
+              <span className="text1">Total Pesanan</span>
+              <span className="text2">0 <span className="text3">Pesanan</span></span>
               <div className="circle2"></div>
             </div>
             <div className="card">
@@ -198,6 +202,17 @@ function Dahsboard() {
             </div>
             <div className="card">
               <div className="circle4"></div>
+            </div>
+          </div>
+          <div className="bottom-static">
+            <div className="big-card">
+              1
+            </div>
+            <div className="card">
+              2
+            </div>
+            <div className="card">
+              3
             </div>
           </div>
         </div>
