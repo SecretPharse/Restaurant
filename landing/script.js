@@ -54,16 +54,12 @@ document.getElementById("next-to-page2").addEventListener("click", () => {
   if (email.trim() == "") {
     email_alert.textContent = "Email kosong";
   }
-  if (telp.trim() == "") {
-    telp_alert.textContent = "Telpon kosong";
-  }
   if (address.trim() == "") {
     address_alert.textContent = "Alamat kosong";
   }
   if (
     name.trim() != "" &&
     email.trim() != "" &&
-    telp.trim() != "" &&
     address.trim() != ""
   ) {
     name_alert.textContent = "";
