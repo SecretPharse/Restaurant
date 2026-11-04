@@ -444,14 +444,20 @@ body {
   align-content: center;
   gap: 5px;
 }
+.popup-OTP .container .body .otp {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
 .popup-OTP .container .body .input {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 10px;
 }
-.popup-OTP .container .body .input input {
-  width: 70%;
+.popup-OTP .container .body .otp .input input {
+  min-width: 70%;
   border: 1px solid #4338ca;
   border-radius: 10px;
   padding: 10px;
@@ -460,8 +466,8 @@ body {
   background: #f2f4f6;
   outline: none;
 }
-.popup-OTP .container .body .input .re-send {
-  width: 30%;
+.popup-OTP .container .body .otp .input .re-send {
+  flex: 1;
   background-color: #4338ca;
   color: #ffffff;
   text-align: center;
@@ -470,7 +476,7 @@ body {
   border-radius: 10px;
   user-select: none;
 }
-.popup-OTP .container .body .input .re-send:active {
+.popup-OTP .container .body .otp .input .re-send:active {
   transform: scale(0.99);
 }
 .popup-OTP .bottom {
@@ -561,7 +567,7 @@ body {
   outline: none;
 }
 .popup-reset-password .container .body .otp .input .re-send {
-  width: 30%;
+  flex: 1;
   background-color: #4338ca;
   color: #ffffff;
   text-align: center;
