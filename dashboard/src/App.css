@@ -9,23 +9,28 @@
   background-color: #ffffff;
   border-right: 2px solid #eeedf3;
   padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-.navbar .space {
+
+/* MAIN MENU */
+.navbar .main-menu {
   display: flex;
   flex-direction: column;
 }
-.navbar .space .card {
+.navbar .main-menu .card {
   padding: 5px 20px;
   font-size: 14px;
   font-weight: 550;
   color: #858393;
 }
-.navbar .space .menus {
+.navbar .main-menu .menus {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.navbar .space .menus .menu {
+.navbar .main-menu .menus .menu {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -36,7 +41,7 @@
   user-select: none;
   font-size: 14px;
 }
-.navbar .space .menus .menu-active {
+.navbar .main-menu .menus .menu-active {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -49,11 +54,55 @@
   background-color: #eff4ff;
   border-radius: 10px;
 }
-.navbar .space .menus .menu-active svg {
+.navbar .main-menu .menus .menu-active svg {
   fill: #4338ca;
 }
 
-/* Dashboard */
+/* MANAJEMEN */
+.navbar .manajemen {
+  display: flex;
+  flex-direction: column;
+}
+.navbar .manajemen .card {
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 550;
+  color: #858393;
+}
+.navbar .manajemen .menus {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.navbar .manajemen .menus .menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 20px;
+  font-weight: 450;
+  color: #464555;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+}
+.navbar .manajemen .menus .menu-active {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4338ca;
+  cursor: pointer;
+  user-select: none;
+  background-color: #eff4ff;
+  border-radius: 10px;
+}
+.navbar .manajemen .menus .menu-active svg {
+  fill: #4338ca;
+}
+
+/* DASHBOARD */
 .dashboard {
   width: 100%;
   height: 100vh;
@@ -200,21 +249,21 @@
 .dashboard .content .static .card1 .text3,
 .dashboard .content .static .card2 .text3,
 .dashboard .content .static .card3 .text3,
-.dashboard .content .static .card4 .text3  {
+.dashboard .content .static .card4 .text3 {
   font-size: 14px;
   font-weight: 450;
 }
 .dashboard .content .static .card1 {
-  border-bottom: 5px solid #6366F1;
+  border-bottom: 5px solid #6366f1;
 }
 .dashboard .content .static .card2 {
-  border-bottom: 5px solid #10B981;
+  border-bottom: 5px solid #10b981;
 }
 .dashboard .content .static .card3 {
-  border-bottom: 5px solid #F59E0B;
+  border-bottom: 5px solid #f59e0b;
 }
 .dashboard .content .static .card4 {
-  border-bottom: 5px solid #0EA5E9;
+  border-bottom: 5px solid #0ea5e9;
 }
 
 .dashboard .content .bottom-static {
@@ -230,6 +279,8 @@
   background-color: #ffffff;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 .dashboard .content .bottom-static .card {
   width: 100%;
@@ -242,20 +293,45 @@
 .dashboard .content .bottom-static .card {
   padding: 0.5rem 20px;
 }
-.dashboard .content .bottom-static .big-card .top,
+.dashboard .content .bottom-static .big-card .top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 500;
+}
+.dashboard .content .bottom-static .big-card .top .non-active {
+  padding: 5px 10px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 2px solid transparent;
+}
+.dashboard .content .bottom-static .big-card .top .active {
+  color: #4338ca;
+  padding: 5px 10px;
+  border-bottom: 2px solid #4338ca;
+  cursor: pointer;
+  user-select: none;
+}
+.dashboard .content .bottom-static .big-card .content {
+  width: 100%;
+  flex: 1;
+  padding: 5px 20px;
+}
 .dashboard .content .bottom-static .card .top {
   font-weight: 600;
   font-size: 18px;
 }
 
-/* ORDERS */
+/* ORDER */
 .order {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.order .top {
+.order .top-bar {
   background-color: #ffffff;
   width: 100%;
   padding: 10px 2rem;
@@ -263,4 +339,71 @@
   font-family: "Manrope";
   font-size: 22px;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.order .top-bar .new-order {
+  background-color: #4f46e5;
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+/* TABLE */
+.table {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.table .top-bar {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 10px 2rem;
+  border-bottom: 2px solid #eeedf3;
+  font-family: "Manrope";
+  font-size: 22px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.table .top-bar .new-table {
+  background-color: #4f46e5;
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+/* Food & Drink */
+.food {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.food .top-bar {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 10px 2rem;
+  border-bottom: 2px solid #eeedf3;
+  font-family: "Manrope";
+  font-size: 22px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.food .top-bar .new-table {
+  background-color: #4f46e5;
+  border-radius: 5px;
+  padding: 5px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-left: auto;
 }

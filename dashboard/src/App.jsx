@@ -7,7 +7,7 @@ function App() {
   return (
     <app className="app">
       <div className="navbar">
-        <div className="space">
+        <div className="main-menu">
           <div className="card">MENU UTAMA</div>
           <div className="menus">
             <div
@@ -55,12 +55,32 @@ function App() {
               </svg>
               <span>Meja</span>
             </div>
+            <div
+              className={count === "FoodAndDrink" ? "menu-active" : "menu"}
+              onClick={() => setCount("FoodAndDrink")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                height="24px"
+                width="24px"
+                fill="#464555"
+              >
+                <path d="M7,22V12.85q-1.27-0.35-2.14-1.4T4,9V2H6V9H7V2H9V9h1V2h2V9q0,1.4-0.86,2.45T9,12.85V22H7Zm10,0V14H14V7q0-2.07 1.46-3.54T19,2V22H17Z" />
+              </svg>
+              <span>Foods & Drinks</span>
+            </div>
           </div>
+        </div>
+        <div className="manajemen">
+          <div className="card">MANAJEMEN</div>
+          <div className="menus"></div>
         </div>
       </div>
       {count === "Dashboard" && <Dahsboard />}
       {count === "Order" && <Order />}
       {count === "Table" && <Table />}
+      {count === "FoodAndDrink" && <FoodAndDrink />}
     </app>
   );
 }
@@ -68,6 +88,7 @@ function App() {
 export default App;
 
 function Dahsboard() {
+  const [count, setCount] = useState("All-Order");
   return (
     <>
       <div className="dashboard">
@@ -213,17 +234,37 @@ function Dahsboard() {
           <div className="bottom-static">
             <div className="big-card">
               <div className="top">
-                Pesanan Selesai
+                <div
+                  className={count === "All-Order" ? "active" : "non-active"}
+                  onClick={() => setCount("All-Order")}
+                >
+                  Semua Pesanan
+                </div>
+                <div
+                  className={count === "Done" ? "active" : "non-active"}
+                  onClick={() => setCount("Done")}
+                >
+                  Selesai
+                </div>
+                <div
+                  className={count === "Cancel" ? "active" : "non-active"}
+                  onClick={() => setCount("Cancel")}
+                >
+                  Dibatalkan
+                </div>
+              </div>
+              <div className="content">
+                {count === "All-Order" && <AllRowDone />}
+                {count === "Done" && <Done />}
+                {count === "Cancel" && <Cancel />}
               </div>
             </div>
             <div className="card">
-              <div className="top">
-                Pesanan Baru
-              </div>
+              <div className="top">Pesanan Baru</div>
             </div>
             <div className="card">
               <div className="top">
-                Paling Banyak Di Pesan
+                <span>Paling Banyak Dipesan</span>
               </div>
             </div>
           </div>
@@ -236,8 +277,11 @@ function Order() {
   return (
     <>
       <div className="order">
-        <div className="top">
+        <div className="top-bar">
           <span>Pesanan</span>
+          <div className="new-order">
+            <span>Buat Pesanan</span>
+          </div>
         </div>
       </div>
     </>
@@ -246,7 +290,51 @@ function Order() {
 function Table() {
   return (
     <>
-      <h1>TABLE</h1>
+      <div className="table">
+        <div className="top-bar">
+          <span>Meja</span>
+          <div className="new-table">
+            <span>Buat Meja Baru</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+function FoodAndDrink() {
+  return (
+    <>
+      <div className="food">
+        <div className="top-bar">
+          <span>Makanan & Minuman</span>
+          <div className="new-table">
+            <span>Buat Menu Baru</span>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// OTHERS
+export function AllRowDone() {
+  return (
+    <>
+      <span>semua pesanan</span>
+    </>
+  );
+}
+export function Done() {
+  return (
+    <>
+      <span>Selesai</span>
+    </>
+  );
+}
+export function Cancel() {
+  return (
+    <>
+      <span>Dibatalkan</span>
     </>
   );
 }
