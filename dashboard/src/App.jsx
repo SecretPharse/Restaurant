@@ -369,7 +369,14 @@ function Report() {
   return (
     <>
       <div className="report">
-        <span>Report</span>
+        <div className="top-bar">
+          <span>Laporan Penjualan</span>
+          <div className="history">
+            <div className="menu-active">Hari Ini</div>
+            <div className="menu">7 Hari Terakhir</div>
+            <div className="menu">Bulan Ini</div>
+          </div>
+        </div>
       </div>
     </>
   );
