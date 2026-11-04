@@ -105,7 +105,7 @@ function App() {
         <div className="profile">
           <img src={logo} alt="" />
           <span className="name-user">nama pengguna</span>
-          <div className="logout">
+          <div className="logout" onClick={() => {window.location.href = "http://127.0.0.1:5500/landing/index.html"}}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
