@@ -74,7 +74,20 @@ function App() {
         </div>
         <div className="manajemen">
           <div className="card">MANAJEMEN</div>
-          <div className="menus"></div>
+          <div className="menus">
+            <div className="menu">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                height="24px"
+                width="24px"
+                fill="#464555"
+              >
+                <path d="M8,13.65V6h3v7.65l-1.5-1.4L8,13.65Zm5,1.5V2h3V12.15l-3,3ZM3,18.6V10H6v5.6l-3,3Zm0,2.45L9.45,14.6L13,17.65l5.6-5.6H17v-2h5v5H20v-1.6l-6.9,6.9L9.55,17.3L5.8,21.05H3Z" />
+              </svg>
+              <span>Laporan Penjualan</span>
+            </div>
+          </div>
         </div>
       </div>
       {count === "Dashboard" && <Dahsboard />}
