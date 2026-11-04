@@ -76,7 +76,10 @@ function App() {
         <div className="manajemen">
           <div className="card">MANAJEMEN</div>
           <div className="menus">
-            <div className="menu">
+            <div
+              className={count === "Report" ? "menu-active" : "menu"}
+              onClick={() => setCount("Report")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -105,7 +108,12 @@ function App() {
         <div className="profile">
           <img src={logo} alt="" />
           <span className="name-user">nama pengguna</span>
-          <div className="logout" onClick={() => {window.location.href = "http://127.0.0.1:5500/landing/index.html"}}>
+          <div
+            className="logout"
+            onClick={() => {
+              window.location.href = "http://127.0.0.1:5500/landing/index.html";
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -122,6 +130,7 @@ function App() {
       {count === "Order" && <Order />}
       {count === "Table" && <Table />}
       {count === "FoodAndDrink" && <FoodAndDrink />}
+      {count === "Report" && <Report />}
     </app>
   );
 }
@@ -352,6 +361,15 @@ function FoodAndDrink() {
             <span>Buat Menu Baru</span>
           </div>
         </div>
+      </div>
+    </>
+  );
+}
+function Report() {
+  return (
+    <>
+      <div className="report">
+        <span>Report</span>
       </div>
     </>
   );
