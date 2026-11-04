@@ -52,6 +52,8 @@
 .navbar .space .menus .menu-active svg {
   fill: #4338ca;
 }
+
+/* Dashboard */
 .dashboard {
   width: 100%;
   height: 100vh;
@@ -164,10 +166,13 @@
   width: 100%;
   gap: 1rem;
 }
-.dashboard .content .static .card {
+.dashboard .content .static .card1,
+.dashboard .content .static .card2,
+.dashboard .content .static .card3,
+.dashboard .content .static .card4 {
   position: relative;
   width: 100%;
-  height: 10rem;
+  height: 8rem;
   background-color: #ffffff;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
   overflow: hidden;
@@ -176,54 +181,42 @@
   display: flex;
   flex-direction: column;
 }
-.dashboard .content .static .card .text1 {
+.dashboard .content .static .card1 .text1,
+.dashboard .content .static .card2 .text1,
+.dashboard .content .static .card3 .text1,
+.dashboard .content .static .card4 .text1 {
   font-size: 16px;
   font-weight: 500;
 }
-.dashboard .content .static .card .text2 {
-  font-size: 28px;
+.dashboard .content .static .card1 .text2,
+.dashboard .content .static .card2 .text2,
+.dashboard .content .static .card3 .text2,
+.dashboard .content .static .card4 .text2 {
+  position: relative;
+  font-size: 32px;
   font-weight: 600;
+  margin-top: auto;
 }
-.dashboard .content .static .card .text3 {
+.dashboard .content .static .card1 .text3,
+.dashboard .content .static .card2 .text3,
+.dashboard .content .static .card3 .text3,
+.dashboard .content .static .card4 .text3  {
   font-size: 14px;
   font-weight: 450;
 }
-.dashboard .content .static .card .circle1 {
-  position: absolute;
-  height: 10rem;
-  width: 10rem;
-  background: radial-gradient(circle, #c7c3ef 100%, transparent 0%);
-  border-radius: 50%;
-  top: 75px;
-  right: -75px;
+.dashboard .content .static .card1 {
+  border-bottom: 5px solid #6366F1;
 }
-.dashboard .content .static .card .circle2 {
-  position: absolute;
-  height: 10rem;
-  width: 10rem;
-  background: radial-gradient(circle, #c7efe0 100%, transparent 0%);
-  border-radius: 50%;
-  top: 75px;
-  right: -75px;
+.dashboard .content .static .card2 {
+  border-bottom: 5px solid #10B981;
 }
-.dashboard .content .static .card .circle3 {
-  position: absolute;
-  height: 10rem;
-  width: 10rem;
-  background: radial-gradient(circle, #ffe0cc 100%, transparent 0%);
-  border-radius: 50%;
-  top: 75px;
-  right: -75px;
+.dashboard .content .static .card3 {
+  border-bottom: 5px solid #F59E0B;
 }
-.dashboard .content .static .card .circle4 {
-  position: absolute;
-  height: 10rem;
-  width: 10rem;
-  background: radial-gradient(circle, #cfe7f5 100%, transparent 0%);
-  border-radius: 50%;
-  top: 75px;
-  right: -75px;
+.dashboard .content .static .card4 {
+  border-bottom: 5px solid #0EA5E9;
 }
+
 .dashboard .content .bottom-static {
   width: 100%;
   flex: 1;
@@ -244,4 +237,30 @@
   background-color: #ffffff;
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
+}
+.dashboard .content .bottom-static .big-card,
+.dashboard .content .bottom-static .card {
+  padding: 0.5rem 20px;
+}
+.dashboard .content .bottom-static .big-card .top,
+.dashboard .content .bottom-static .card .top {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* ORDERS */
+.order {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.order .top {
+  background-color: #ffffff;
+  width: 100%;
+  padding: 10px 2rem;
+  border-bottom: 2px solid #eeedf3;
+  font-family: "Manrope";
+  font-size: 22px;
+  font-weight: 500;
 }

@@ -187,32 +187,44 @@ function Dahsboard() {
             </div>
           </div>
           <div className="static">
-            <div className="card">
+            <div className="card1">
               <span className="text1">Total Pendapatan</span>
               <span className="text2">Rp.0</span>
-              <div className="circle1"></div>
             </div>
-            <div className="card">
-              <span className="text1">Total Pesanan</span>
-              <span className="text2">0 <span className="text3">Pesanan</span></span>
-              <div className="circle2"></div>
+            <div className="card2">
+              <span className="text1">Total Pesanan Selesai</span>
+              <span className="text2">
+                0 <span className="text3">Pesanan</span>
+              </span>
             </div>
-            <div className="card">
-              <div className="circle3"></div>
+            <div className="card3">
+              <span className="text1">Total Antrian Pesanan</span>
+              <span className="text2">
+                0 <span className="text3">Pesanan</span>
+              </span>
             </div>
-            <div className="card">
-              <div className="circle4"></div>
+            <div className="card4">
+              <span className="text1">Total Produk Di Pesan</span>
+              <span className="text2">
+                0 <span className="text3">Produk</span>
+              </span>
             </div>
           </div>
           <div className="bottom-static">
             <div className="big-card">
-              1
+              <div className="top">
+                Pesanan Selesai
+              </div>
             </div>
             <div className="card">
-              2
+              <div className="top">
+                Pesanan Baru
+              </div>
             </div>
             <div className="card">
-              3
+              <div className="top">
+                Paling Banyak Di Pesan
+              </div>
             </div>
           </div>
         </div>
@@ -223,7 +235,11 @@ function Dahsboard() {
 function Order() {
   return (
     <>
-      <h1>ORDER</h1>
+      <div className="order">
+        <div className="top">
+          <span>Pesanan</span>
+        </div>
+      </div>
     </>
   );
 }
