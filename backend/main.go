@@ -1,22 +1,38 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 )
 
+var database *pgxpool.Pool
+
 func main() {
-	http.ListenAndServe("http://127.0.0.1:8080", nil)
+	if err := godotenv.Load("../.env"); err != nil {
+		log.Panicln(err)
+	}
+	output := os.Getenv("DatabaseURL")
+	fmt.Println(output)
 }
-func connect(){
+
+func connect() {
 	if err := godotenv.Load(); err != nil {
 		log.Panicln(err)
 	}
 
-	password := os.Getenv("PASSWORD")
-	databaseURL := fmt.Sprintf("postgres://postgres:%s@127.0.0.1:5432/", password)
+	DatabaseURL := os.Getenv("DatabaseURL")
+	database, err := pgxpool.New(context.Background(), DatabaseURL)
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	if err := database.Ping(context.Background()); err != nil {
+		log.Panicln(err)
+	}
+	fmt.Println("Berhasil Terhubung Ke Database")
 }
