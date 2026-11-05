@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -18,7 +19,18 @@ type configuration struct {
 }
 
 func main() {
+	var config configuration
 
+	load, err := os.ReadFile("../config.json")
+	if err != nil {
+		log.Panicln(err)
+	}
+
+	if err := json.Unmarshal(load, &config); err != nil {
+		log.Panicln(err)
+	}
+
+	http.ListenAndServe(config.HOST, nil)
 }
 
 func connect() {
