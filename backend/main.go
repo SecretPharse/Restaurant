@@ -554,7 +554,8 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	var api API
-	var name, password string
+	var name, phone, address, open, close, password string
+	var worker int
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -580,7 +581,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.QueryRow(context.Background(), "SELECT NAME, PASSWORD, FROM USERS WHERE EMAIL=$1", api.Email).Scan(&name, &password); errors.Is(err, pgx.ErrNoRows) {
+	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, PASSWORD FROM USERS WHERE EMAIL=$1", api.Email).Scan(
+		&name, &phone, &address, &open, &close, &worker, &password); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Email tidak ditemukan",
@@ -599,21 +601,26 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Detail: "Sistem bermasalah",
+			Detail: "Sistem Bermasalah",
 		})
 		log.Println(err)
 		return
 	} else if !password_valid {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Detail: "Password salah",
+			Detail: "Password Salah",
 		})
 		return
 	}
 
 	json.NewEncoder(w).Encode(API{
-		Status: true,
-		Name:   name,
+		Status:  true,
+		Name:    name,
+		Phone:   phone,
+		Address: address,
+		Open:    open,
+		Close:   close,
+		Worker:  worker,
 	})
 	format := fmt.Sprintf("%s Login", api.Email)
 	fmt.Println(format)
@@ -621,7 +628,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 // OTHER
 func SendOTP(to, subject, body string) error {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("../.env"); err != nil {
 		return fmt.Errorf("%s", err)
 	}
 	host := os.Getenv("HOST")
