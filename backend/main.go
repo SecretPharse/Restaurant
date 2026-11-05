@@ -31,7 +31,7 @@ type API struct {
 	Open     string `json:"Open"`
 	Close    string `json:"Close"`
 	Worker   int    `json:"Worker"`
-	Table    int    `json:"Table"`
+	MaxTable int    `json:"MaxTable"`
 	Password string `json:"Password"`
 	OTP      string `json:"OTP"`
 }
