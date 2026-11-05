@@ -396,7 +396,7 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 
 func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	var api API
-	var code, Email, name string
+	var code, name string
 	var code_expire, verification_expire time.Time
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -475,7 +475,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	verification_valid, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET VERIFICATION_AT=$1 WHERE EMAIL=$2", Time, email)
+	verification_valid, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET VERIFICATION_AT=$1 WHERE EMAIL=$2", Time, api.Email)
 	if err != nil {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
@@ -502,7 +502,8 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	registered, err := DB.Exec(context.Background(), "INSERT INTO USERS (NAME, EMAIL, PASSWORD) VALUES ($1, $2, $3)", api.Name, email, password)
+	registered, err := DB.Exec(context.Background(), "INSERT INTO ACCOUNTS (NAME, EMAIL, PHONE, ADDRESS, OPEN, CLOSE, WORKER, PASSWORD) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+		api.Name, api.Email, api.Phone, api.Address, api.Open, api.Close, api.Worker, password)
 	if err != nil {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
@@ -513,16 +514,15 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	} else if registered.RowsAffected() == 0 {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Type:   "Peringatan",
-			Detail: "Verifikasi gagal. Sistem sedang bermasalah",
+			Detail: "Verifikasi gagal. Sistem Sedang Bermasalah",
 		})
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT NAME, EMAIL FROM USERS WHERE EMAIL=$1", email).Scan(&name, &UUID); errors.Is(err, pgx.ErrNoRows) {
+	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(&name); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Detail: "Gagal mengambil Parent Key",
+			Detail: "Gagal Memuat Akun",
 		})
 		log.Println(err)
 		return
@@ -546,7 +546,6 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(API{
 		Status: true,
 		Name:   name,
-		Email:  Email,
 	})
 
 	format := fmt.Sprintf("%s Berhasil mendaftar", api.Email)
@@ -613,8 +612,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(API{
-		Status:     true,
-		Name:       name,
+		Status: true,
+		Name:   name,
 	})
 	format := fmt.Sprintf("%s Login", api.Email)
 	fmt.Println(format)
