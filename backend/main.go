@@ -63,6 +63,8 @@ func main() {
 		log.Panicln(err)
 	}
 
+	http.HandleFunc("/Register", Verify)
+
 	http.ListenAndServe(config.HOST, nil)
 }
 
