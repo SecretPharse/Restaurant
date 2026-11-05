@@ -2,31 +2,38 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/joho/godotenv"
 )
 
 var database *pgxpool.Pool
 
+type configuration struct {
+	URL string `json:"URL"`
+	HOST string `json:"HOST"`
+}
+
 func main() {
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Panicln(err)
-	}
-	output := os.Getenv("DatabaseURL")
-	fmt.Println(output)
+
 }
 
 func connect() {
-	if err := godotenv.Load(); err != nil {
+	var config configuration
+
+	load, err := os.ReadFile("../config.json")
+	if err != nil {
 		log.Panicln(err)
 	}
 
-	DatabaseURL := os.Getenv("DatabaseURL")
-	database, err := pgxpool.New(context.Background(), DatabaseURL)
+	if err := json.Unmarshal(load, &config); err != nil {
+		log.Panicln(err)
+	}
+
+	database, err := pgxpool.New(context.Background(), config.URL)
 	if err != nil {
 		log.Panicln(err)
 	}
