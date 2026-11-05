@@ -21,6 +21,9 @@ type configuration struct {
 func main() {
 	var config configuration
 
+	connect()
+	defer database.Close()
+
 	load, err := os.ReadFile("../config.json")
 	if err != nil {
 		log.Panicln(err)
@@ -45,7 +48,7 @@ func connect() {
 		log.Panicln(err)
 	}
 
-	database, err := pgxpool.New(context.Background(), config.URL)
+	database, err = pgxpool.New(context.Background(), config.URL)
 	if err != nil {
 		log.Panicln(err)
 	}
