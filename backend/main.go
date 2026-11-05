@@ -58,3 +58,16 @@ func connect() {
 	}
 	fmt.Println("Berhasil Terhubung Ke Database")
 }
+
+func Verify(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Access-Controll-Allow-Origin", "*")
+	w.Header().Set("Access-Controll-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Controll-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+}
