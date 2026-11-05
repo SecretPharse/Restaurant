@@ -31,7 +31,7 @@ type API struct {
 	Open     string `json:"Open"`
 	Close    string `json:"Close"`
 	Worker   int    `json:"Worker"`
-	MaxTable int    `json:"MaxTable"`
+	MAXTable int    `json:"MaxTable"`
 	Password string `json:"Password"`
 	OTP      string `json:"OTP"`
 }
@@ -404,7 +404,8 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 
 func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	var api API
-	var code, name string
+	var code, name, phone, address, open, close string
+	var worker, MaxTable int
 	var code_expire, verification_expire time.Time
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -527,7 +528,8 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, TABLE FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(&name); errors.Is(err, pgx.ErrNoRows) {
+	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(
+		&name, &phone, &address, &open, &close, &worker, &MaxTable); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Gagal Memuat Akun",
@@ -554,6 +556,12 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(API{
 		Status: true,
 		Name:   name,
+		Phone: phone,
+		Address: address,
+		Open: open,
+		Close: close,
+		Worker: worker,
+		MAXTable: MaxTable,
 	})
 
 	format := fmt.Sprintf("%s Berhasil mendaftar", api.Email)
@@ -563,7 +571,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	var api API
 	var name, phone, address, open, close, password string
-	var worker int
+	var worker, MaxTable int
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -589,8 +597,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, PASSWORD FROM USERS WHERE EMAIL=$1", api.Email).Scan(
-		&name, &phone, &address, &open, &close, &worker, &password); errors.Is(err, pgx.ErrNoRows) {
+	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE, PASSWORD FROM USERS WHERE EMAIL=$1", api.Email).Scan(
+		&name, &phone, &address, &open, &close, &worker, &MaxTable, &password); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Email tidak ditemukan",
@@ -629,6 +637,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Open:    open,
 		Close:   close,
 		Worker:  worker,
+		MAXTable: MaxTable,
 	})
 	format := fmt.Sprintf("%s Login", api.Email)
 	fmt.Println(format)
