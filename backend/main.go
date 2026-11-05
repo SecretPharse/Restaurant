@@ -31,6 +31,7 @@ type API struct {
 	Open     string `json:"Open"`
 	Close    string `json:"Close"`
 	Worker   int    `json:"Worker"`
+	Table    int    `json:"Table"`
 	Password string `json:"Password"`
 	OTP      string `json:"OTP"`
 }
@@ -526,7 +527,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(&name); errors.Is(err, pgx.ErrNoRows) {
+	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, TABLE FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(&name); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Gagal Memuat Akun",
