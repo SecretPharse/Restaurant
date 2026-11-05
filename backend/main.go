@@ -64,6 +64,11 @@ func main() {
 	}
 
 	http.HandleFunc("/Register", Verify)
+	http.HandleFunc("/New-OTP", RequestNewOTP)
+	http.HandleFunc("/Cancel", CancelVerify)
+	http.HandleFunc("/Verification", CompleteEnrollment)
+	http.HandleFunc("/Register", Verify)
+	http.HandleFunc("/Login", Login)
 
 	http.ListenAndServe(config.HOST, nil)
 }
