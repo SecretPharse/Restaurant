@@ -152,6 +152,10 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		json.NewEncoder(w).Encode(API{
+			Status: true,
+			Detail: api.Email,
+		})
 		format = fmt.Sprintf("%s Permintaan verifikasi sedang dalam proses", api.Email)
 		fmt.Println(format)
 		return
@@ -361,46 +365,27 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 
 	DB, err := database.Begin(context.Background())
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 	defer DB.Rollback(context.Background())
 
 	if r.Method == http.MethodOptions {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(r.Method)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 
 	if err := DB.QueryRow(context.Background(), "SELECT CODE, CODE_EXPIRE, VERIFICATION_EXPIRE FROM VERIFICATIONS WHERE EMAIL=$1",
 		api.Email).Scan(&code, &code_expire, &verification_expire); errors.Is(err, pgx.ErrNoRows) {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Pendaftaran ditolak, email bermasalah",
-		})
+		log.Println(err)
 		return
 	} else if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -416,13 +401,10 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 
 	result, err := argon2id.ComparePasswordAndHash(api.OTP, code)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
-	} else if !result {
+	}
+	if !result {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Kode verifikasi salah",
@@ -432,27 +414,15 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 
 	verification_valid, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET VERIFICATION_AT=$1 WHERE EMAIL=$2", Time, api.Email)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Database bermasalah",
-		})
 		log.Println(err)
 		return
-	} else if verification_valid.RowsAffected() == 0 {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Verifikasi gagal. Sistem sedang bermasalah",
-		})
-		log.Printf("%s Verifikasi gagal", api.Email)
+	} else if err := verification_valid.RowsAffected(); err == 0 {
+		log.Println(err)
 		return
 	}
 
 	password, err := argon2id.CreateHash(api.Password, argon_params)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -460,41 +430,23 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	registered, err := DB.Exec(context.Background(), "INSERT INTO ACCOUNTS (NAME, EMAIL, PHONE, ADDRESS, OPEN, CLOSE, WORKER, PASSWORD) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
 		api.Name, api.Email, api.Phone, api.Address, api.Open, api.Close, api.Worker, password)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Database bermasalah",
-		})
 		log.Println(err)
 		return
-	} else if registered.RowsAffected() == 0 {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Verifikasi gagal. Sistem Sedang Bermasalah",
-		})
+	} else if err := registered.RowsAffected(); err == 0 {
+		log.Println(err)
 		return
 	}
 
 	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(
 		&name, &phone, &address, &open, &close, &worker, &MaxTable); errors.Is(err, pgx.ErrNoRows) {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Akun Tidak Ada",
-		})
 		log.Println(err)
 		return
 	} else if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
+		log.Println(err)
 		return
 	}
 
 	if err := DB.Commit(context.Background()); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Verifikasi gagal",
-		})
 		log.Println(err)
 		return
 	}

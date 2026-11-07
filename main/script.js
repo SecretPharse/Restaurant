@@ -38,14 +38,7 @@ document.getElementById("login").addEventListener("click", async () => {
     });
     const response = await request.json();
     if (response.Status === true) {
-      sessionStorage.setItem("Name", response.Name);
       sessionStorage.setItem("Email", email);
-      sessionStorage.setItem("Phone", response.Phone);
-      sessionStorage.setItem("Address", response.Address);
-      sessionStorage.setItem("Open", response.Open);
-      sessionStorage.setItem("Close", response.Close);
-      sessionStorage.setItem("Worker", response.Worker);
-      sessionStorage.setItem("MaxTable", response.MAXTable);
 
       alert(response.name);
     } else if (response.Status === false) {
@@ -130,7 +123,7 @@ document.getElementById("register").addEventListener("click", async () => {
   var address = document.getElementById("address-register").value;
   var open = document.getElementById("open-time-register").value;
   var close = document.getElementById("close-time-register").value;
-  var worker = document.getElementById("num-worker-register").value;
+  var worker = document.getElementById("num-worker-register").valueAsNumber;
   var password = document.getElementById("password-register").value;
   var confirmation_password = document.getElementById(
     "confirmation-password",
@@ -153,7 +146,7 @@ document.getElementById("register").addEventListener("click", async () => {
   } else if (close.trim() == "") {
     time_alert.textContent = "Waktu tutup kosong";
   }
-  if (worker.trim() == "") {
+  if (worker == NaN) {
     worker_alert.textContent = "Jumlah pekerja kosong";
   }
   if (password.trim() == "") {
@@ -166,14 +159,21 @@ document.getElementById("register").addEventListener("click", async () => {
   if (
     open.trim() != "" &&
     close.trim() != "" &&
-    worker.trim() != "" &&
+    worker != NaN &&
     password.trim() != "" &&
     confirmation_password.trim() != ""
   ) {
+    console.log(typeof worker);
+    
+    document.getElementById("register").disabled = true;
+    document.getElementById("text-btn-register").hidden = true;
+    document.getElementById("spinner-register").hidden = false;
+
     if (password != confirmation_password) {
       confirmation_alert.textContent = "Password Salah";
       return;
     }
+    
     var request = await fetch(ServerURL["Register"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -197,7 +197,8 @@ document.getElementById("register").addEventListener("click", async () => {
       if (response.Status == "Email") {
         document.getElementById("popup-register-page2").style.display = "none";
         document.getElementById("popup-register-page1").style.display = "flex";
-        document.getElementById("alert-email-register").textContent = response.Detail;
+        document.getElementById("alert-email-register").textContent =
+          response.Detail;
       }
       return;
     }
@@ -208,13 +209,32 @@ document.getElementById("back-to-page1").addEventListener("click", () => {
   document.getElementById("popup-register-page2").style.display = "none";
   document.getElementById("popup-register-page1").style.display = "flex";
 });
-document.getElementById("verify").addEventListener("click", () => {
+document.getElementById("verify").addEventListener("click", async () => {
   // Call Backend
   var code = document.getElementById("OTP").value;
+  var alert_code = document.getElementById("alert-otp");
+  alert_code.textContent = "";
+
   if (code.trim() == "") {
-    document.getElementById("alert-otp").textContent = "Code Kosong";
-    return;
+    alert_code.textContent = "Code Kosong";
   }
+
+  if (code.trim() != "") {
+    var request = await fetch(ServerURL["Verification"], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        OTP: code,
+      }),
+    });
+    var response = await request.json();
+    if (response.Status === true) {
+      alert(response.Email);
+    } else if (response.Status === false) {
+      alert_code.textContent = response.Detail;
+    }
+  }
+  return;
 });
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
