@@ -1,7 +1,15 @@
+var ServerURL = {
+  Register: "http://127.0.0.1:8080/Register",
+  NewOTP: "http://127.0.0.1:8080/New-OTP",
+  CancelRegister: "http://127.0.0.1:8080/CancelRegister",
+  Verification: "http://127.0.0.1:8080/Verification",
+  Login: "http://127.0.0.1:8080/Login",
+};
+
 document.getElementById("reset-password").addEventListener("click", () => {
   document.getElementById("popup-reset-password").style.display = "flex";
 });
-document.getElementById("login").addEventListener("click", () => {
+document.getElementById("login").addEventListener("click", async () => {
   var email = document.getElementById("email-login").value;
   var password = document.getElementById("password-login").value;
   var email_alert = document.getElementById("alert-email-login");
@@ -16,11 +24,40 @@ document.getElementById("login").addEventListener("click", () => {
     password_alert.textContent = "Kata Sandi kosong";
   }
   if (email.trim() != "" && password.trim() != "") {
-    email_alert.textContent = "";
-    password_alert.textContent = "";
     document.getElementById("login").disabled = true;
     document.getElementById("text-btn-login").hidden = true;
     document.getElementById("spinner-login").hidden = false;
+
+    const request = await fetch(ServerURL["Login"], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Email: email,
+        Password: password,
+      }),
+    });
+    const response = await request.json();
+    if (response.Status === true) {
+      sessionStorage.setItem("Name", response.Name);
+      sessionStorage.setItem("Email", email);
+      sessionStorage.setItem("Phone", response.Phone);
+      sessionStorage.setItem("Address", response.Address);
+      sessionStorage.setItem("Open", response.Open);
+      sessionStorage.setItem("Close", response.Close);
+      sessionStorage.setItem("Worker", response.Worker);
+      sessionStorage.setItem("MaxTable", response.MAXTable);
+
+      alert(response.name);
+    } else if (response.Status === false) {
+      if (response.Type == "Email") {
+        email_alert.textContent = response.Detail;
+      } else if (response.Type == "Password") {
+        password_alert.textContent = response.Detail;
+      }
+      document.getElementById("login").disabled = false;
+      document.getElementById("text-btn-login").hidden = false;
+      document.getElementById("spinner-login").hidden = true;
+    }
   }
   return;
 });
@@ -57,11 +94,7 @@ document.getElementById("next-to-page2").addEventListener("click", () => {
   if (address.trim() == "") {
     address_alert.textContent = "Alamat kosong";
   }
-  if (
-    name.trim() != "" &&
-    email.trim() != "" &&
-    address.trim() != ""
-  ) {
+  if (name.trim() != "" && email.trim() != "" && address.trim() != "") {
     name_alert.textContent = "";
     email_alert.textContent = "";
     telp_alert.textContent = "";
@@ -90,7 +123,11 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("popup-register-page1").style.display = "none";
   document.getElementById("popup-login").style.display = "flex";
 });
-document.getElementById("register").addEventListener("click", () => {
+document.getElementById("register").addEventListener("click", async () => {
+  var name = document.getElementById("name-register").value;
+  var email = document.getElementById("email-register").value;
+  var telp = document.getElementById("telp-register").value;
+  var address = document.getElementById("address-register").value;
   var open = document.getElementById("open-time-register").value;
   var close = document.getElementById("close-time-register").value;
   var worker = document.getElementById("num-worker-register").value;
@@ -137,7 +174,33 @@ document.getElementById("register").addEventListener("click", () => {
       confirmation_alert.textContent = "Password Salah";
       return;
     }
-    document.getElementById("popup-OTP").style.display = "flex";
+    var request = await fetch(ServerURL["Register"], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Name: name,
+        Email: email,
+        Phone: telp,
+        Address: address,
+        Open: open,
+        Close: close,
+        Worker: worker,
+        Password: password,
+      }),
+    });
+
+    var response = await request.json();
+
+    if (response.Status === true) {
+      document.getElementById("popup-OTP").style.display = "flex";
+    } else if (response.Status === false) {
+      if (response.Status == "Email") {
+        document.getElementById("popup-register-page2").style.display = "none";
+        document.getElementById("popup-register-page1").style.display = "flex";
+        document.getElementById("alert-email-register").textContent = response.Detail;
+      }
+      return;
+    }
   }
   return;
 });
@@ -145,19 +208,21 @@ document.getElementById("back-to-page1").addEventListener("click", () => {
   document.getElementById("popup-register-page2").style.display = "none";
   document.getElementById("popup-register-page1").style.display = "flex";
 });
-document.getElementById("verify").addEventListener("click", () => { // Call Backend
+document.getElementById("verify").addEventListener("click", () => {
+  // Call Backend
   var code = document.getElementById("OTP").value;
   if (code.trim() == "") {
     document.getElementById("alert-otp").textContent = "Code Kosong";
-    return
+    return;
   }
-})
+});
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
   document.getElementById("popup-OTP").style.display = "none";
 });
 var count = 0;
-document.getElementById("re-send").addEventListener("click", () => { // Call Backend
+document.getElementById("re-send").addEventListener("click", () => {
+  // Call Backend
   count += 1;
   if (count > 0) {
     document.getElementById("re-send").textContent = "Kirim Ulang";
@@ -165,7 +230,8 @@ document.getElementById("re-send").addEventListener("click", () => { // Call Bac
 });
 document
   .getElementById("verification-new-password")
-  .addEventListener("click", () => { // Call backend
+  .addEventListener("click", () => {
+    // Call backend
     var code = document.getElementById("OTP-reset-password").value;
     var password = document.getElementById("new-password").value;
     var verify = document.getElementById("confirmation-new-password").value;
@@ -198,7 +264,8 @@ document
     }
     return;
   });
-document.getElementById("back-login").addEventListener("click", () => { // Call Backend
+document.getElementById("back-login").addEventListener("click", () => {
+  // Call Backend
   document.getElementById("OTP-reset-password").value = "";
   document.getElementById("new-password").value = "";
   document.getElementById("confirmation-new-password").value = "";

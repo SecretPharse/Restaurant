@@ -23,6 +23,7 @@ var database *pgxpool.Pool
 
 type API struct {
 	Status   bool   `json:"Status"`
+	Type     string `json:"Type"`
 	Detail   string `json:"Detail"`
 	Name     string `json:"Name"`
 	Email    string `json:"Email"`
@@ -48,41 +49,14 @@ var argon_params = &argon2id.Params{
 	SaltLength:  32,
 	KeyLength:   64,
 }
+var config configuration
 
 func main() {
-	var config configuration
-
-	connect()
-	defer database.Close()
-
-	load, err := os.ReadFile("../config.json")
+	load, err := os.ReadFile("./config.json")
 	if err != nil {
 		log.Panicln(err)
 	}
-
-	if err := json.Unmarshal(load, &config); err != nil {
-		log.Panicln(err)
-	}
-
-	http.HandleFunc("/Register", Verify)
-	http.HandleFunc("/New-OTP", RequestNewOTP)
-	http.HandleFunc("/Cancel", CancelVerify)
-	http.HandleFunc("/Verification", CompleteEnrollment)
-	http.HandleFunc("/Register", Verify)
-	http.HandleFunc("/Login", Login)
-
-	http.ListenAndServe(config.HOST, nil)
-}
-
-func connect() {
-	var config configuration
-
-	load, err := os.ReadFile("../config.json")
-	if err != nil {
-		log.Panicln(err)
-	}
-
-	if err := json.Unmarshal(load, &config); err != nil {
+	if err = json.Unmarshal(load, &config); err != nil {
 		log.Panicln(err)
 	}
 
@@ -90,48 +64,50 @@ func connect() {
 	if err != nil {
 		log.Panicln(err)
 	}
-
 	if err := database.Ping(context.Background()); err != nil {
 		log.Panicln(err)
 	}
-	fmt.Println("Berhasil Terhubung Ke Database")
+	fmt.Println("Berhasil Tehubung Dengan Database")
+	defer database.Close()
+
+	server := http.FileServer(http.Dir("./main"))
+	http.Handle("/", server)
+
+	http.HandleFunc("/Register", Verify)
+	http.HandleFunc("/New-OTP", RequestNewOTP)
+	http.HandleFunc("/CancelRegister", CancelVerify)
+	http.HandleFunc("/Verification", CompleteEnrollment)
+	http.HandleFunc("/Login", Login)
+
+	format := fmt.Sprintf("Server http://%s Active", config.HOST)
+	fmt.Println(format)
+
+	log.Fatal(http.ListenAndServe(config.HOST, nil))
 }
 
 func Verify(w http.ResponseWriter, r *http.Request) {
 	var api API
 	var cache string
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
 
 	DB, err := database.Begin(context.Background())
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 	defer DB.Rollback(context.Background())
 
 	if r.Method == http.MethodOptions {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(r.Method)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -139,10 +115,6 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 	if err := DB.QueryRow(context.Background(), "SELECT EMAIL FROM VERIFICATIONS WHERE EMAIL=$1", api.Email).Scan(&cache); errors.Is(err, pgx.ErrNoRows) {
 		num, err := rand.Int(rand.Reader, big.NewInt(10000))
 		if err != nil {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Gagal membuat OTP",
-			})
 			log.Println(err)
 			return
 		}
@@ -150,10 +122,6 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 		Raw_OTP := fmt.Sprintf("%04d", num.Int64())
 		OTP, err := argon2id.CreateHash(Raw_OTP, argon_params)
 		if err != nil {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Gagal membuat OTP",
-			})
 			log.Println(err)
 			return
 		}
@@ -165,58 +133,36 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 		InsertDB, err := DB.Exec(context.Background(), "INSERT INTO VERIFICATIONS (EMAIL, CODE, CODE_EXPIRE, VERIFICATION_EXPIRE) VALUES ($1, $2, $3, $4)",
 			api.Email, OTP, Code_Expire, Verification_Expire)
 		if err != nil {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Database bermasalah",
-			})
 			log.Println(err)
 			return
-		} else if InsertDB.RowsAffected() == 0 {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Gagal mendaftarkan email",
-			})
+		} else if err := InsertDB.RowsAffected(); err == 0 {
+			log.Println(err)
 			return
 		}
 
 		format := fmt.Sprintf("%s Meminta kode OTP", api.Email)
 		fmt.Println(format)
 		if err := SendOTP(api.Email, "Kode OTP kamu", Raw_OTP); err != nil {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Gagal mengirim OTP",
-			})
 			log.Println(err)
 			return
 		}
 
 		if err := DB.Commit(context.Background()); err != nil {
-			json.NewEncoder(w).Encode(API{
-				Status: false,
-				Detail: "Sistem bermasalah",
-			})
 			log.Println(err)
 			return
 		}
 
-		json.NewEncoder(w).Encode(API{
-			Status: true,
-			Detail: "Code OTP sudah dikirim ke email kamu",
-		})
 		format = fmt.Sprintf("%s Permintaan verifikasi sedang dalam proses", api.Email)
 		fmt.Println(format)
 		return
 	} else if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 
 	json.NewEncoder(w).Encode(API{
 		Status: false,
+		Type:   "Email",
 		Detail: "Email telah terdaftar",
 	})
 }
@@ -224,7 +170,7 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 func CancelVerify(w http.ResponseWriter, r *http.Request) {
 	var api API
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
@@ -277,7 +223,7 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	var api API
 	var request_count int
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
@@ -408,7 +354,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	var worker, MaxTable int
 	var code_expire, verification_expire time.Time
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
@@ -532,7 +478,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		&name, &phone, &address, &open, &close, &worker, &MaxTable); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Detail: "Gagal Memuat Akun",
+			Detail: "Akun Tidak Ada",
 		})
 		log.Println(err)
 		return
@@ -554,13 +500,13 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(API{
-		Status: true,
-		Name:   name,
-		Phone: phone,
-		Address: address,
-		Open: open,
-		Close: close,
-		Worker: worker,
+		Status:   true,
+		Name:     name,
+		Phone:    phone,
+		Address:  address,
+		Open:     open,
+		Close:    close,
+		Worker:   worker,
 		MAXTable: MaxTable,
 	})
 
@@ -573,70 +519,57 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var name, phone, address, open, close, password string
 	var worker, MaxTable int
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Content-Type", "application/json")
 
 	if r.Method == http.MethodOptions {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(r.Method)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 
-	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE, PASSWORD FROM USERS WHERE EMAIL=$1", api.Email).Scan(
+	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE, PASSWORD FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(
 		&name, &phone, &address, &open, &close, &worker, &MaxTable, &password); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
+			Type:   "Email",
 			Detail: "Email tidak ditemukan",
 		})
 		log.Println(err)
 		return
 	} else if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
+		log.Println(err)
 		return
 	}
 
 	password_valid, err := argon2id.ComparePasswordAndHash(api.Password, password)
-	if err != nil {
+	if !password_valid {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
-			Detail: "Sistem Bermasalah",
-		})
-		log.Println(err)
-		return
-	} else if !password_valid {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
+			Type:   "Password",
 			Detail: "Password Salah",
 		})
+		return
+	} else if err != nil {
+		log.Println(err)
 		return
 	}
 
 	json.NewEncoder(w).Encode(API{
-		Status:  true,
-		Name:    name,
-		Phone:   phone,
-		Address: address,
-		Open:    open,
-		Close:   close,
-		Worker:  worker,
+		Status:   true,
+		Name:     name,
+		Phone:    phone,
+		Address:  address,
+		Open:     open,
+		Close:    close,
+		Worker:   worker,
 		MAXTable: MaxTable,
 	})
 	format := fmt.Sprintf("%s Login", api.Email)
@@ -645,7 +578,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 // OTHER
 func SendOTP(to, subject, body string) error {
-	if err := godotenv.Load("../.env"); err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		return fmt.Errorf("%s", err)
 	}
 	host := os.Getenv("HOST")
