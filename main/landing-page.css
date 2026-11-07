@@ -51,7 +51,7 @@ body {
 /* Login */
 .popup-login {
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -413,7 +413,7 @@ body {
 /* OTP */
 .popup-OTP {
   position: absolute;
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -491,9 +491,34 @@ body {
   font-weight: 550;
   border-radius: 10px;
   user-select: none;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 15px;
 }
 .popup-OTP .container .body .otp .input .re-send:active {
   transform: scale(0.99);
+}
+.popup-OTP .container .body .otp .input .re-send-register {
+  flex: 1;
+  background-color: #4338ca;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-weight: 550;
+  border-radius: 10px;
+  user-select: none;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 15px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.popup-OTP .container .body .otp .input .re-send-register:active {
+  transform: scale(.99);
 }
 .popup-OTP .bottom {
   display: flex;

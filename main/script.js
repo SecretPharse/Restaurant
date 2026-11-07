@@ -237,6 +237,38 @@ document.getElementById("verify").addEventListener("click", async () => {
   }
   return;
 });
+document
+  .getElementById("re-send-register")
+  .addEventListener("click", async () => {
+    console.log(true);
+
+    var canrequest = document.getElementById("re-send-register");
+    canrequest.style.display = "none";
+    canrequest.disabled = true;
+
+    var cantrequest = document.getElementById("re-send-time");
+    cantrequest.style.display = "flex";
+    
+    document.getElementById("spinner-resend-register").hidden = false;
+
+    var sisa = 5;
+    const timer = setInterval(() => {
+      document.getElementById("spinner-resend-register").hidden = true;
+      var output = document.getElementById("re-send-time-text");
+      const m = String(Math.floor(sisa / 60)).padStart(2, "0");
+      const s = String(sisa % 60).padStart(2, "0");
+      output.textContent = `${m}:${s}`;
+
+      if (sisa === 0) {
+        clearInterval(timer);
+        canrequest.style.display = "block";
+        canrequest.disabled = false;
+        cantrequest.style.display = "none";
+        output.textContent = ""
+      }
+      sisa--;
+    }, 1000);
+  });
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
   document.getElementById("popup-OTP").style.display = "none";

@@ -134,14 +134,19 @@
         <div class="container">
             <div class="top">
                 <span class="text1">Verifikasi Kode OTP</span>
-                <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda <span class="user-email" id="user-email"></span></span>
+                <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda <span
+                        class="user-email" id="user-email"></span></span>
             </div>
             <div class="body">
                 <div class="otp">
                     <div class="input">
                         <input id="OTP" type="text" inputmode="numeric" maxlength="6"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
-                        <div class="re-send">Kirim ulang</div>
+                        <button class="re-send" id="re-send-register">Kirim ulang</button>
+                        <button class="re-send-register" id="re-send-time" hidden>
+                            <span class="spinner" id="spinner-resend-register"></span>
+                            <span id="re-send-time-text"></span>
+                        </button>
                     </div>
                     <div class="alert-text" id="alert-otp"></div>
                 </div>
