@@ -395,7 +395,6 @@ body {
 .popup-register-page2 .bottom .register {
   background-color: #4338ca;
   color: #ffffff;
-  text-align: center;
   padding: 10px;
   border: none;
   border-radius: 10px;
@@ -403,6 +402,9 @@ body {
   font-weight: 550;
   user-select: none;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .popup-register-page2 .bottom .register:active {
   transform: scale(0.99);
@@ -447,6 +449,11 @@ body {
   color: #505050;
   font-size: 16px;
   font-weight: 500;
+}
+.popup-OTP .container .top .text2 .user-email {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
 }
 .popup-OTP .container .body {
   display: flex;

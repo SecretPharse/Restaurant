@@ -21,13 +21,13 @@
         <div class="body">
             <div class="email">
                 <span>Alamat Email</span>
-                <input type="email" id="email-login" autocomplete="none" placeholder="Email">
+                <input type="email" id="email-login" autocomplete="off" placeholder="Email">
                 <span class="alert-text" id="alert-email-login"></span>
             </div>
             <div class="password">
                 <span>Kata Sandi</span>
                 <div class="placeholder">
-                    <input type="password" id="password-login" placeholder="Kata sandi" autocomplete="none">
+                    <input type="password" id="password-login" placeholder="Kata sandi" autocomplete="off">
                     <img id="eye-icon-login" src="assets/visibility_off.svg" alt="">
                 </div>
                 <span class="alert-text" id="alert-password-login"></span>
@@ -52,22 +52,22 @@
         <div class="body">
             <div class="name">
                 <span>Nama Restoran</span>
-                <input type="text" id="name-register" autocomplete="none" placeholder="Contoh: Krusty Krab, Chambucket">
+                <input type="text" id="name-register" autocomplete="off" placeholder="Contoh: Krusty Krab, Chambucket">
                 <span class="alert-text" id="alert-name-register"></span>
             </div>
             <div class="email">
                 <span>Alamat Email</span>
-                <input type="email" id="email-register" autocomplete="none" placeholder="Email">
+                <input type="email" id="email-register" autocomplete="off" placeholder="Email">
                 <span class="alert-text" id="alert-email-register"></span>
             </div>
             <div class="telp">
                 <span>No.telp (opsional)</span>
-                <input type="number" id="telp-register" autocomplete="none" placeholder="No.telp">
+                <input type="number" id="telp-register" autocomplete="off" placeholder="No.telp">
                 <span class="alert-text" id="alert-telp-register"></span>
             </div>
             <div class="address">
                 <span>Alamat tempat</span>
-                <input type="text" id="address-register" autocomplete="none" placeholder="Alamat tempat">
+                <input type="text" id="address-register" autocomplete="off" placeholder="Alamat tempat">
                 <span class="alert-text" id="alert-address-register"></span>
             </div>
         </div>
@@ -134,13 +134,13 @@
         <div class="container">
             <div class="top">
                 <span class="text1">Verifikasi Kode OTP</span>
-                <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda</span>
+                <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda <span class="user-email" id="user-email"></span></span>
             </div>
             <div class="body">
                 <div class="otp">
                     <div class="input">
                         <input id="OTP" type="text" inputmode="numeric" maxlength="6"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
                         <div class="re-send">Kirim ulang</div>
                     </div>
                     <div class="alert-text" id="alert-otp"></div>
@@ -171,7 +171,7 @@
                 <div class="otp">
                     <div class="input">
                         <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="none">
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
                         <div class="re-send" id="re-send">Kirim</div>
                     </div>
                     <span class="alert-text" id="alert-otp-re-password"></span>

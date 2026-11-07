@@ -146,7 +146,7 @@ document.getElementById("register").addEventListener("click", async () => {
   } else if (close.trim() == "") {
     time_alert.textContent = "Waktu tutup kosong";
   }
-  if (worker == NaN) {
+  if (Number.isNaN(worker)) {
     worker_alert.textContent = "Jumlah pekerja kosong";
   }
   if (password.trim() == "") {
@@ -159,21 +159,18 @@ document.getElementById("register").addEventListener("click", async () => {
   if (
     open.trim() != "" &&
     close.trim() != "" &&
-    worker != NaN &&
+    !Number.isNaN(worker) &&
     password.trim() != "" &&
     confirmation_password.trim() != ""
   ) {
-    console.log(typeof worker);
-    
-    document.getElementById("register").disabled = true;
-    document.getElementById("text-btn-register").hidden = true;
-    document.getElementById("spinner-register").hidden = false;
-
     if (password != confirmation_password) {
       confirmation_alert.textContent = "Password Salah";
       return;
     }
-    
+
+    document.getElementById("register").disabled = true;
+    document.getElementById("text-btn-register").hidden = true;
+    document.getElementById("spinner-register").hidden = false;
     var request = await fetch(ServerURL["Register"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -193,13 +190,17 @@ document.getElementById("register").addEventListener("click", async () => {
 
     if (response.Status === true) {
       document.getElementById("popup-OTP").style.display = "flex";
+      document.getElementById("user-email").textContent = response.Detail;
     } else if (response.Status === false) {
-      if (response.Status == "Email") {
+      if (response.Type === "Email") {
         document.getElementById("popup-register-page2").style.display = "none";
         document.getElementById("popup-register-page1").style.display = "flex";
         document.getElementById("alert-email-register").textContent =
           response.Detail;
       }
+      document.getElementById("register").disabled = false;
+      document.getElementById("text-btn-register").hidden = false;
+      document.getElementById("spinner-register").hidden = true;
       return;
     }
   }
