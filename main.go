@@ -234,45 +234,26 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 
 	DB, err := database.Begin(context.Background())
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 	defer DB.Rollback(context.Background())
 
 	if r.Method == http.MethodOptions {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(r.Method)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Print(err)
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT REQUEST_COUNT FROM VERIFICATIONS WHERE EMAIL = $1", api.Email).Scan(&request_count); errors.Is(err, pgx.ErrNoRows) {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Email tidak ditemukan",
-		})
+	if err := DB.QueryRow(context.Background(), "SELECT COUNT FROM VERIFICATIONS WHERE EMAIL = $1", api.Email).Scan(&request_count); errors.Is(err, pgx.ErrNoRows) {
+		log.Println(err)
 		return
 	} else if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -287,10 +268,6 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 
 	num, err := rand.Int(rand.Reader, big.NewInt(1000))
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -298,10 +275,6 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	Raw_OTP := fmt.Sprintf("%04d", num.Int64())
 	OTP, err := argon2id.CreateHash(Raw_OTP, argon_params)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
@@ -309,44 +282,28 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	Time := time.Now()
 	Code_Expire := Time.Add(10 * time.Minute)
 
-	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2, REQUEST_COUNT=$3 WHERE EMAIL=$4",
+	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2, COUNT=$3 WHERE EMAIL=$4",
 		OTP, Code_Expire, request_count+1, api.Email)
 	if err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Database bermasalah",
-		})
 		log.Println(err)
 		return
-	} else if NewOTP.RowsAffected() == 0 {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Permintaan OTP baru gagal",
-		})
+	} else if err := NewOTP.RowsAffected(); err == 0 {
+		log.Println(err)
 		return
 	}
 
 	if err := SendOTP(api.Email, "Kode OTP kamu", Raw_OTP); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Gagal mengirim kode OTP",
-		})
 		log.Println(err)
 		return
 	}
 
 	if err := DB.Commit(context.Background()); err != nil {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Sistem bermasalah",
-		})
 		log.Println(err)
 		return
 	}
 
 	json.NewEncoder(w).Encode(API{
 		Status: true,
-		Detail: "OTP baru telah dikirim",
 	})
 	format := fmt.Sprintf("%s Meminta OTP Baru", api.Email)
 	fmt.Println(format)

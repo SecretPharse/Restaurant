@@ -51,7 +51,7 @@ body {
 /* Login */
 .popup-login {
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -413,7 +413,7 @@ body {
 /* OTP */
 .popup-OTP {
   position: absolute;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;

@@ -117,10 +117,7 @@ document.getElementById("to-login").addEventListener("click", () => {
   document.getElementById("popup-login").style.display = "flex";
 });
 document.getElementById("register").addEventListener("click", async () => {
-  var name = document.getElementById("name-register").value;
   var email = document.getElementById("email-register").value;
-  var telp = document.getElementById("telp-register").value;
-  var address = document.getElementById("address-register").value;
   var open = document.getElementById("open-time-register").value;
   var close = document.getElementById("close-time-register").value;
   var worker = document.getElementById("num-worker-register").valueAsNumber;
@@ -175,14 +172,7 @@ document.getElementById("register").addEventListener("click", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        Name: name,
         Email: email,
-        Phone: telp,
-        Address: address,
-        Open: open,
-        Close: close,
-        Worker: worker,
-        Password: password,
       }),
     });
 
@@ -212,6 +202,14 @@ document.getElementById("back-to-page1").addEventListener("click", () => {
 });
 document.getElementById("verify").addEventListener("click", async () => {
   // Call Backend
+  var name = document.getElementById("name-register").value;
+  var email = document.getElementById("email-register").value;
+  var telp = document.getElementById("telp-register").value;
+  var address = document.getElementById("address-register").value;
+  var open = document.getElementById("open-time-register").value;
+  var close = document.getElementById("close-time-register").value;
+  var worker = document.getElementById("num-worker-register").valueAsNumber;
+  var password = document.getElementById("password-register").value;
   var code = document.getElementById("OTP").value;
   var alert_code = document.getElementById("alert-otp");
   alert_code.textContent = "";
@@ -225,12 +223,20 @@ document.getElementById("verify").addEventListener("click", async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        Name: name,
+        Email: email,
+        Phone: telp,
+        Address: address,
+        Open: open,
+        Close: close,
+        Worker: worker,
+        Password: password,
         OTP: code,
       }),
     });
     var response = await request.json();
     if (response.Status === true) {
-      alert(response.Email);
+      alert(response.Name);
     } else if (response.Status === false) {
       alert_code.textContent = response.Detail;
     }
@@ -240,34 +246,47 @@ document.getElementById("verify").addEventListener("click", async () => {
 document
   .getElementById("re-send-register")
   .addEventListener("click", async () => {
-    console.log(true);
-
     var canrequest = document.getElementById("re-send-register");
     canrequest.style.display = "none";
     canrequest.disabled = true;
 
     var cantrequest = document.getElementById("re-send-time");
     cantrequest.style.display = "flex";
-    
+
     document.getElementById("spinner-resend-register").hidden = false;
 
-    var sisa = 5;
-    const timer = setInterval(() => {
-      document.getElementById("spinner-resend-register").hidden = true;
-      var output = document.getElementById("re-send-time-text");
-      const m = String(Math.floor(sisa / 60)).padStart(2, "0");
-      const s = String(sisa % 60).padStart(2, "0");
-      output.textContent = `${m}:${s}`;
+    var email = document.getElementById("email-register").value;
+    var request = await fetch(ServerURL["NewOTP"], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Email: email,
+      }),
+    });
 
-      if (sisa === 0) {
-        clearInterval(timer);
-        canrequest.style.display = "block";
-        canrequest.disabled = false;
-        cantrequest.style.display = "none";
-        output.textContent = ""
-      }
-      sisa--;
-    }, 1000);
+    var response = await request.json();
+
+    if (response.Status === true) {
+      var sisa = 5;
+      const timer = setInterval(() => {
+        document.getElementById("spinner-resend-register").hidden = true;
+        var output = document.getElementById("re-send-time-text");
+        const m = String(Math.floor(sisa / 60)).padStart(2, "0");
+        const s = String(sisa % 60).padStart(2, "0");
+        output.textContent = `${m}:${s}`;
+
+        if (sisa === 0) {
+          clearInterval(timer);
+          canrequest.style.display = "block";
+          canrequest.disabled = false;
+          cantrequest.style.display = "none";
+          output.textContent = "";
+        }
+        sisa--;
+      }, 1000);
+    } else if (response.Status === false) {
+      document.getElementById("alert-otp").textContent = response.Detail;
+    }
   });
 document.getElementById("back-register").addEventListener("click", () => {
   document.getElementById("OTP").value = "";
