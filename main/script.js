@@ -7,7 +7,6 @@ var ServerURL = {
 };
 
 document.getElementById("reset-password").addEventListener("click", () => {
-  document.getElementById("popup-reset-password").style.display = "flex";
 });
 document.getElementById("login").addEventListener("click", async () => {
   var email = document.getElementById("email-login").value;
@@ -179,6 +178,8 @@ document.getElementById("register").addEventListener("click", async () => {
     var response = await request.json();
 
     if (response.Status === true) {
+      document.getElementById("text-btn-register").hidden = false;
+      document.getElementById("spinner-register").hidden = true;
       document.getElementById("popup-OTP").style.display = "flex";
       document.getElementById("user-email").textContent = response.Detail;
     } else if (response.Status === false) {
@@ -193,6 +194,9 @@ document.getElementById("register").addEventListener("click", async () => {
       document.getElementById("spinner-register").hidden = true;
       return;
     }
+    document.getElementById("register").disabled = false;
+    document.getElementById("text-btn-register").hidden = false;
+    document.getElementById("spinner-register").hidden = true;
   }
   return;
 });
@@ -267,31 +271,27 @@ document
     var response = await request.json();
 
     if (response.Status === true) {
-      var sisa = 5;
+      var time = 180;
       const timer = setInterval(() => {
         document.getElementById("spinner-resend-register").hidden = true;
         var output = document.getElementById("re-send-time-text");
-        const m = String(Math.floor(sisa / 60)).padStart(2, "0");
-        const s = String(sisa % 60).padStart(2, "0");
+        const m = String(Math.floor(time / 60)).padStart(2, "0");
+        const s = String(time % 60).padStart(2, "0");
         output.textContent = `${m}:${s}`;
 
-        if (sisa === 0) {
+        if (time === 0) {
           clearInterval(timer);
           canrequest.style.display = "block";
           canrequest.disabled = false;
           cantrequest.style.display = "none";
           output.textContent = "";
         }
-        sisa--;
+        time--;
       }, 1000);
     } else if (response.Status === false) {
       document.getElementById("alert-otp").textContent = response.Detail;
     }
   });
-document.getElementById("back-register").addEventListener("click", () => {
-  document.getElementById("OTP").value = "";
-  document.getElementById("popup-OTP").style.display = "none";
-});
 var count = 0;
 document.getElementById("re-send").addEventListener("click", () => {
   // Call Backend
@@ -299,6 +299,7 @@ document.getElementById("re-send").addEventListener("click", () => {
   if (count > 0) {
     document.getElementById("re-send").textContent = "Kirim Ulang";
   }
+
 });
 document
   .getElementById("verification-new-password")
