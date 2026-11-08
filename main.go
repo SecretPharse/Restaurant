@@ -226,7 +226,6 @@ func CancelVerify(w http.ResponseWriter, r *http.Request) {
 
 func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	var account API
-	var request_count int
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -251,22 +250,6 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT COUNT FROM VERIFICATIONS WHERE EMAIL = $1", account.Email).Scan(&request_count); errors.Is(err, pgx.ErrNoRows) {
-		log.Println(err)
-		return
-	} else if err != nil {
-		log.Println(err)
-		return
-	}
-
-	if request_count > 5 {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Permintaan OTP baru telah mencapai batas",
-		})
-		return
-	}
-
 	num, err := rand.Int(rand.Reader, big.NewInt(1000))
 	if err != nil {
 		log.Println(err)
@@ -283,8 +266,8 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	Time := time.Now()
 	Code_Expire := Time.Add(10 * time.Minute)
 
-	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2, COUNT=$3 WHERE EMAIL=$4",
-		OTP, Code_Expire, request_count+1, account.Email)
+	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2 WHERE EMAIL=$3",
+		OTP, Code_Expire, account.Email)
 	if err != nil {
 		log.Println(err)
 		return

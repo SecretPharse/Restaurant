@@ -52,7 +52,7 @@ body {
 /* Login */
 .popup-login {
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -544,7 +544,7 @@ body {
 /* Reset Password */
 .popup-reset-password {
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;

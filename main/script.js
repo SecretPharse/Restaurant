@@ -67,7 +67,7 @@ document
     var eye = document.getElementById(
       "new-password-input-input1-placeholder-eye",
     );
-    if (input.type == "password") {
+    if (input.type === "password") {
       input.type = "text";
       eye.src = "assets/visibility_on.svg";
     } else {
@@ -96,7 +96,7 @@ document
     // Call Backend
     var email = document.getElementById("email-login").value;
     var input1 = document.getElementById("new-password").value;
-    var input2 = document.getElementById("new-password").value;
+    var input2 = document.getElementById("confirmation-new-password").value;
     var alert1 = document.getElementById("alert-new-password1");
     var alert2 = document.getElementById("alert-new-password2");
     var alert3 = document.getElementById("alert-email-login");
@@ -114,9 +114,14 @@ document
       document.getElementById("popup-new-password").style.display = "none";
       document.getElementById("popup-login").style.display = "flex";
       alert3.textContent = "Email Kosong";
+      return;
     }
 
     if (input1.trim() != "" && input2.trim() != "") {
+      if (input1 != input2) {
+        alert2.textContent = "Password Tidak Sama";
+        return;
+      }
       document.getElementById("btn-confirmation-new-password").disabled = true;
       document.getElementById("text-confirmation-new-password").hidden = true;
       document.getElementById("spinner-new-password").hidden = false;
@@ -381,47 +386,48 @@ document
   });
 document.getElementById("re-send").addEventListener("click", async () => {
   // Call Backend
-    var canrequest = document.getElementById("re-send");
-    canrequest.style.display = "none";
-    canrequest.disabled = true;
+  var canrequest = document.getElementById("re-send");
+  canrequest.style.display = "none";
+  canrequest.disabled = true;
 
-    var cantrequest = document.getElementById("re-send-disable");
-    cantrequest.style.display = "flex";
+  var cantrequest = document.getElementById("re-send-disable");
+  cantrequest.style.display = "flex";
 
-    document.getElementById("spinner-resend").hidden = false;
+  document.getElementById("spinner-resend").hidden = false;
 
-    var email = document.getElementById("email-register").value;
-    var request = await fetch(ServerURL["NewOTP"], {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        Email: email,
-      }),
-    });
+  var email = document.getElementById("email-login").value;
+  var request = await fetch(ServerURL["NewOTP"], {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      Email: email,
+    }),
+  });
 
-    var response = await request.json();
+  var response = await request.json();
 
-    if (response.Status === true) {
-      var time = 180;
-      const timer = setInterval(() => {
-        document.getElementById("spinner-resend").hidden = true;
-        var output = document.getElementById("re-send-disable-text");
-        const m = String(Math.floor(time / 60)).padStart(2, "0");
-        const s = String(time % 60).padStart(2, "0");
-        output.textContent = `${m}:${s}`;
+  if (response.Status === true) {
+    var time = 180;
+    const timer = setInterval(() => {
+      document.getElementById("spinner-resend").style.display = "none";
+      var output = document.getElementById("re-send-disable-text");
+      const m = String(Math.floor(time / 60)).padStart(2, "0");
+      const s = String(time % 60).padStart(2, "0");
+      output.textContent = `${m}:${s}`;
 
-        if (time === 0) {
-          clearInterval(timer);
-          canrequest.style.display = "block";
-          canrequest.disabled = false;
-          cantrequest.style.display = "none";
-          output.textContent = "";
-        }
-        time--;
-      }, 1000);
-    } else if (response.Status === false) {
-      document.getElementById("alert-otp-re-password").textContent = response.Detail;
-    }
+      if (time === 0) {
+        clearInterval(timer);
+        canrequest.style.display = "block";
+        canrequest.disabled = false;
+        cantrequest.style.display = "none";
+        output.textContent = "";
+      }
+      time--;
+    }, 1000);
+  } else if (response.Status === false) {
+    document.getElementById("alert-otp-re-password").textContent =
+      response.Detail;
+  }
 });
 document
   .getElementById("verification-new-password")
@@ -445,13 +451,6 @@ document
     }
     return;
   });
-document.getElementById("back-login").addEventListener("click", () => {
-  // Call Backend
-  document.getElementById("OTP-reset-password").value = "";
-  document.getElementById("new-password").value = "";
-  document.getElementById("confirmation-new-password").value = "";
-  document.getElementById("popup-reset-password").style.display = "none";
-});
 document.getElementById("eye-icon-login").addEventListener("click", () => {
   var eye = document.getElementById("eye-icon-login");
   var input = document.getElementById("password-login");
@@ -479,30 +478,6 @@ document
   .addEventListener("click", () => {
     var eye = document.getElementById("eye-icon-confirmation");
     var input = document.getElementById("confirmation-password");
-    if (input.type === "password") {
-      input.type = "text";
-      eye.src = "assets/visibility_on.svg";
-    } else {
-      input.type = "password";
-      eye.src = "assets/visibility_off.svg";
-    }
-  });
-document.getElementById("eye-new-password").addEventListener("click", () => {
-  var eye = document.getElementById("eye-new-password");
-  var input = document.getElementById("new-password");
-  if (input.type === "password") {
-    input.type = "text";
-    eye.src = "assets/visibility_on.svg";
-  } else {
-    input.type = "password";
-    eye.src = "assets/visibility_off.svg";
-  }
-});
-document
-  .getElementById("eye-confirmation-new-password")
-  .addEventListener("click", () => {
-    var eye = document.getElementById("eye-confirmation-new-password");
-    var input = document.getElementById("confirmation-new-password");
     if (input.type === "password") {
       input.type = "text";
       eye.src = "assets/visibility_on.svg";
