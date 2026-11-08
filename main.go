@@ -226,6 +226,7 @@ func CancelVerify(w http.ResponseWriter, r *http.Request) {
 
 func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	var account API
+	var email string
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -250,6 +251,14 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := DB.QueryRow(context.Background(), "SELECT EMAIL FROM VERIFICATIONS WHERE EMAIL=$1", account.Email).Scan(&email); errors.Is(err, pgx.ErrNoRows) {
+		json.NewEncoder(w).Encode(API{
+			Status: false,
+			Detail: "Email tidak terdaftar",
+		})
+		return
+	}
+
 	num, err := rand.Int(rand.Reader, big.NewInt(1000))
 	if err != nil {
 		log.Println(err)
@@ -267,7 +276,7 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	Code_Expire := Time.Add(10 * time.Minute)
 
 	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2 WHERE EMAIL=$3",
-		OTP, Code_Expire, account.Email)
+		OTP, Code_Expire, email)
 	if err != nil {
 		log.Println(err)
 		return

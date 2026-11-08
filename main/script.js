@@ -143,6 +143,15 @@ document
         document.getElementById("user-email-re-password").textContent = email;
         document.getElementById("popup-new-password").style.display = "none";
         document.getElementById("popup-reset-password").style.display = "flex";
+      } else {
+        document.getElementById("popup-new-password").style.display = "none";
+        document.getElementById("popup-login").style.display = "flex";
+        document.getElementById("alert-email-login").textContent =
+          response.Detail;
+        document.getElementById("btn-confirmation-new-password").disabled =
+          false;
+        document.getElementById("text-confirmation-new-password").hidden = false;
+        document.getElementById("spinner-new-password").hidden = true;
       }
     }
   });
@@ -457,11 +466,11 @@ document
           Password: password,
         }),
       });
-      var response = await response.json();
+      var response = await request.json();
       if (response.Status === true) {
-        code.value = "";
-        password.value = "";
-        ver_password.value = "";
+        code = "";
+        password = "";
+        ver_password = "";
         document.getElementById("popup-reset-password").style.display = "none";
         document.getElementById("popup-login").style.display = "flex";
       } else {
