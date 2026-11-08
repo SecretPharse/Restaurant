@@ -79,14 +79,14 @@ func main() {
 	http.HandleFunc("/Verification", CompleteEnrollment)
 	http.HandleFunc("/Login", Login)
 
-	format := fmt.Sprintf("Server http://%s Active", config.HOST)
+	format := fmt.Sprintf("Server http://%s", config.HOST)
 	fmt.Println(format)
 
 	log.Fatal(http.ListenAndServe(config.HOST, nil))
 }
 
 func Verify(w http.ResponseWriter, r *http.Request) {
-	var api API
+	var account API
 	var cache string
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
@@ -107,12 +107,12 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
 		log.Println(err)
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT EMAIL FROM VERIFICATIONS WHERE EMAIL=$1", api.Email).Scan(&cache); errors.Is(err, pgx.ErrNoRows) {
+	if err := DB.QueryRow(context.Background(), "SELECT EMAIL FROM VERIFICATIONS WHERE EMAIL=$1", account.Email).Scan(&cache); errors.Is(err, pgx.ErrNoRows) {
 		num, err := rand.Int(rand.Reader, big.NewInt(10000))
 		if err != nil {
 			log.Println(err)
@@ -131,7 +131,7 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 		Verification_Expire := Time.Add(24 * time.Hour)
 
 		InsertDB, err := DB.Exec(context.Background(), "INSERT INTO VERIFICATIONS (EMAIL, CODE, CODE_EXPIRE, VERIFICATION_EXPIRE) VALUES ($1, $2, $3, $4)",
-			api.Email, OTP, Code_Expire, Verification_Expire)
+			account.Email, OTP, Code_Expire, Verification_Expire)
 		if err != nil {
 			log.Println(err)
 			return
@@ -140,9 +140,9 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		format := fmt.Sprintf("%s Meminta kode OTP", api.Email)
+		format := fmt.Sprintf("%s Meminta kode OTP", account.Email)
 		fmt.Println(format)
-		if err := SendOTP(api.Email, "Kode OTP kamu", Raw_OTP); err != nil {
+		if err := SendOTP(account.Email, "Kode OTP kamu", Raw_OTP); err != nil {
 			log.Println(err)
 			return
 		}
@@ -154,9 +154,9 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 
 		json.NewEncoder(w).Encode(API{
 			Status: true,
-			Detail: api.Email,
+			Detail: account.Email,
 		})
-		format = fmt.Sprintf("%s Permintaan verifikasi sedang dalam proses", api.Email)
+		format = fmt.Sprintf("%s Permintaan verifikasi sedang dalam proses", account.Email)
 		fmt.Println(format)
 		return
 	} else if err != nil {
@@ -172,7 +172,7 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 }
 
 func CancelVerify(w http.ResponseWriter, r *http.Request) {
-	var api API
+	var account API
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -189,7 +189,7 @@ func CancelVerify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
 			Detail: "Sistem bermasalah",
@@ -198,7 +198,7 @@ func CancelVerify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	delete, err := database.Exec(context.Background(), "DELETE FROM VERIFICATIONS WHERE EMAIL=$1", api.Email)
+	delete, err := database.Exec(context.Background(), "DELETE FROM VERIFICATIONS WHERE EMAIL=$1", account.Email)
 	if err != nil {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
@@ -219,12 +219,12 @@ func CancelVerify(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(API{
 		Status: true,
 	})
-	format := fmt.Sprintf("%s Membatalkan verifikasi", api.Email)
+	format := fmt.Sprintf("%s Membatalkan verifikasi", account.Email)
 	fmt.Println(format)
 }
 
 func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
-	var api API
+	var account API
 	var request_count int
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
@@ -245,12 +245,12 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
 		log.Print(err)
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT COUNT FROM VERIFICATIONS WHERE EMAIL = $1", api.Email).Scan(&request_count); errors.Is(err, pgx.ErrNoRows) {
+	if err := DB.QueryRow(context.Background(), "SELECT COUNT FROM VERIFICATIONS WHERE EMAIL = $1", account.Email).Scan(&request_count); errors.Is(err, pgx.ErrNoRows) {
 		log.Println(err)
 		return
 	} else if err != nil {
@@ -283,7 +283,7 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	Code_Expire := Time.Add(10 * time.Minute)
 
 	NewOTP, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET CODE=$1, CODE_EXPIRE=$2, COUNT=$3 WHERE EMAIL=$4",
-		OTP, Code_Expire, request_count+1, api.Email)
+		OTP, Code_Expire, request_count+1, account.Email)
 	if err != nil {
 		log.Println(err)
 		return
@@ -292,7 +292,7 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := SendOTP(api.Email, "Kode OTP kamu", Raw_OTP); err != nil {
+	if err := SendOTP(account.Email, "Kode OTP kamu", Raw_OTP); err != nil {
 		log.Println(err)
 		return
 	}
@@ -305,12 +305,12 @@ func RequestNewOTP(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(API{
 		Status: true,
 	})
-	format := fmt.Sprintf("%s Meminta OTP Baru", api.Email)
+	format := fmt.Sprintf("%s Meminta OTP Baru", account.Email)
 	fmt.Println(format)
 }
 
 func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
-	var api API
+	var account API
 	var code, name, phone, address, open, close string
 	var worker, MaxTable int
 	var code_expire, verification_expire time.Time
@@ -333,13 +333,13 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
 		log.Println(err)
 		return
 	}
 
 	if err := DB.QueryRow(context.Background(), "SELECT CODE, CODE_EXPIRE, VERIFICATION_EXPIRE FROM VERIFICATIONS WHERE EMAIL=$1",
-		api.Email).Scan(&code, &code_expire, &verification_expire); errors.Is(err, pgx.ErrNoRows) {
+		account.Email).Scan(&code, &code_expire, &verification_expire); errors.Is(err, pgx.ErrNoRows) {
 		log.Println(err)
 		return
 	} else if err != nil {
@@ -356,7 +356,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := argon2id.ComparePasswordAndHash(api.OTP, code)
+	result, err := argon2id.ComparePasswordAndHash(account.OTP, code)
 	if err != nil {
 		log.Println(err)
 		return
@@ -369,7 +369,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	verification_valid, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET VERIFICATION_AT=$1 WHERE EMAIL=$2", Time, api.Email)
+	verification_valid, err := DB.Exec(context.Background(), "UPDATE VERIFICATIONS SET VERIFICATION_AT=$1 WHERE EMAIL=$2", Time, account.Email)
 	if err != nil {
 		log.Println(err)
 		return
@@ -378,14 +378,14 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	password, err := argon2id.CreateHash(api.Password, argon_params)
+	password, err := argon2id.CreateHash(account.Password, argon_params)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
 	registered, err := DB.Exec(context.Background(), "INSERT INTO ACCOUNTS (NAME, EMAIL, PHONE, ADDRESS, OPEN, CLOSE, WORKER, PASSWORD) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-		api.Name, api.Email, api.Phone, api.Address, api.Open, api.Close, api.Worker, password)
+		account.Name, account.Email, account.Phone, account.Address, account.Open, account.Close, account.Worker, password)
 	if err != nil {
 		log.Println(err)
 		return
@@ -394,7 +394,7 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(
+	if err := DB.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE FROM ACCOUNTS WHERE EMAIL=$1", account.Email).Scan(
 		&name, &phone, &address, &open, &close, &worker, &MaxTable); errors.Is(err, pgx.ErrNoRows) {
 		log.Println(err)
 		return
@@ -419,12 +419,12 @@ func CompleteEnrollment(w http.ResponseWriter, r *http.Request) {
 		MAXTable: MaxTable,
 	})
 
-	format := fmt.Sprintf("%s Berhasil mendaftar", api.Email)
+	format := fmt.Sprintf("%s Berhasil mendaftar", account.Email)
 	fmt.Println(format)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	var api API
+	var account API
 	var name, phone, address, open, close, password string
 	var worker, MaxTable int
 
@@ -439,12 +439,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := json.NewDecoder(r.Body).Decode(&api); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
 		log.Println(err)
 		return
 	}
 
-	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE, PASSWORD FROM ACCOUNTS WHERE EMAIL=$1", api.Email).Scan(
+	if err := database.QueryRow(context.Background(), "SELECT NAME, PHONE, ADDRESS, OPEN, CLOSE, WORKER, MAXTABLE, PASSWORD FROM ACCOUNTS WHERE EMAIL=$1", account.Email).Scan(
 		&name, &phone, &address, &open, &close, &worker, &MaxTable, &password); errors.Is(err, pgx.ErrNoRows) {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
@@ -458,7 +458,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	password_valid, err := argon2id.ComparePasswordAndHash(api.Password, password)
+	password_valid, err := argon2id.ComparePasswordAndHash(account.Password, password)
 	if !password_valid {
 		json.NewEncoder(w).Encode(API{
 			Status: false,
@@ -481,7 +481,55 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Worker:   worker,
 		MAXTable: MaxTable,
 	})
-	format := fmt.Sprintf("%s Login", api.Email)
+	format := fmt.Sprintf("%s Login", account.Email)
+	fmt.Println(format)
+}
+
+func ChangePassword(w http.ResponseWriter, r *http.Request) {
+	var account API
+	var email string
+
+	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+
+	if err := json.NewDecoder(r.Body).Decode(&account); err != nil {
+		log.Println(err)
+		return
+	}
+
+	if err := database.QueryRow(context.Background(), "SELECT EMAIL FROM ACCOUNTS WHERE EMAIL=$1", account.Email).Scan(&email); errors.Is(err, pgx.ErrNoRows) {
+		json.NewEncoder(w).Encode(API{
+			Status: false,
+			Detail: "Email Tidak Terdaftar",
+		})
+		return
+	} else if err != nil {
+		log.Println(err)
+		return
+	}
+
+	new_password, err := argon2id.CreateHash(account.Password, argon_params)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	change, err := database.Exec(context.Background(), "UPDATE ACCOUNTS SET PASSWORD=$1 WHERE EMAIL=$2", new_password, email)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if err := change.RowsAffected(); err == 0 {
+		log.Println(err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(API{
+		Status: true,
+	})
+	format := fmt.Sprintf("%s Change Password", email)
 	fmt.Println(format)
 }
 

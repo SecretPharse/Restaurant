@@ -40,7 +40,7 @@ document.getElementById("login").addEventListener("click", async () => {
     if (response.Status === true) {
       sessionStorage.setItem("Email", email);
 
-      alert(response.name);
+      alert(response.Name);
     } else if (response.Status === false) {
       if (response.Type == "Email") {
         email_alert.textContent = response.Detail;

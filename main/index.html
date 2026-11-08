@@ -177,7 +177,8 @@
                     <div class="input">
                         <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
-                        <div class="re-send" id="re-send">Kirim</div>
+                        <button class="re-send" id="re-send">Kirim</button>
+                        <button class="re-send-disable" id="re-send-disable" hidden></button>
                     </div>
                     <span class="alert-text" id="alert-otp-re-password"></span>
                 </div>

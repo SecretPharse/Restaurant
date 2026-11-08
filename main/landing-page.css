@@ -616,8 +616,33 @@ body {
   font-weight: 550;
   border-radius: 10px;
   user-select: none;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 15px;
 }
 .popup-reset-password .container .body .otp .input .re-send:active {
+  transform: scale(0.99);
+}
+.popup-reset-password .container .body .otp .input .re-send-disable {
+  flex: 1;
+  background-color: #4338ca;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px;
+  font-weight: 550;
+  border-radius: 10px;
+  user-select: none;
+  border: none;
+  outline: none;
+  height: 100%;
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.popup-reset-password .container .body .otp .input .re-send-disable:active {
   transform: scale(0.99);
 }
 .popup-reset-password .body .new-password {
