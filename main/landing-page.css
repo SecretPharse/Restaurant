@@ -410,7 +410,7 @@ body {
   position: absolute;
   background-color: #ffffff;
   max-width: 30rem;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 3rem;
   box-shadow:
@@ -528,11 +528,11 @@ body {
 /* New Passowrd */
 .new-password {
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow:
     0 20px 25px 10px rgba(0, 0, 0, 0.05),
     0 -2px 10px 5px rgba(0, 0, 0, 0.05);
