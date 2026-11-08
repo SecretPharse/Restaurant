@@ -1,9 +1,10 @@
-var ServerURL = {
-  Register: "http://127.0.0.1:8080/Register",
-  NewOTP: "http://127.0.0.1:8080/New-OTP",
-  CancelRegister: "http://127.0.0.1:8080/CancelRegister",
-  Verification: "http://127.0.0.1:8080/Verification",
-  Login: "http://127.0.0.1:8080/Login",
+var AuthURL = {
+  Register: "http://127.0.0.1:8080/Auth/Register",
+  NewOTP: "http://127.0.0.1:8080/Auth/New-OTP",
+  CancelRegister: "http://127.0.0.1:8080/Auth/CancelRegister",
+  Verification: "http://127.0.0.1:8080/Auth/Verification",
+  Login: "http://127.0.0.1:8080/Auth/Login",
+  Change: "http://127.0.0.1:8080/Auth/Change",
 };
 document.getElementById("login").addEventListener("click", async () => {
   var email = document.getElementById("email-login").value;
@@ -24,7 +25,7 @@ document.getElementById("login").addEventListener("click", async () => {
     document.getElementById("text-btn-login").hidden = true;
     document.getElementById("spinner-login").hidden = false;
 
-    const request = await fetch(ServerURL["Login"], {
+    const request = await fetch(AuthURL["Login"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -125,7 +126,7 @@ document
       document.getElementById("btn-confirmation-new-password").disabled = true;
       document.getElementById("text-confirmation-new-password").hidden = true;
       document.getElementById("spinner-new-password").hidden = false;
-      var request = await fetch(ServerURL["NewOTP"], {
+      var request = await fetch(AuthURL["NewOTP"], {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -139,7 +140,7 @@ document
         document.getElementById("text-confirmation-new-password").hidden =
           false;
         document.getElementById("spinner-new-password").hidden = true;
-        document.getElementById("user-email").textContent = email;
+        document.getElementById("user-email-re-password").textContent = email;
         document.getElementById("popup-new-password").style.display = "none";
         document.getElementById("popup-reset-password").style.display = "flex";
       }
@@ -259,7 +260,7 @@ document.getElementById("register").addEventListener("click", async () => {
     document.getElementById("register").disabled = true;
     document.getElementById("text-btn-register").hidden = true;
     document.getElementById("spinner-register").hidden = false;
-    var request = await fetch(ServerURL["Register"], {
+    var request = await fetch(AuthURL["Register"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -315,7 +316,7 @@ document.getElementById("verify").addEventListener("click", async () => {
   }
 
   if (code.trim() != "") {
-    var request = await fetch(ServerURL["Verification"], {
+    var request = await fetch(AuthURL["Verification"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -352,7 +353,7 @@ document
     document.getElementById("spinner-resend-register").hidden = false;
 
     var email = document.getElementById("email-register").value;
-    var request = await fetch(ServerURL["NewOTP"], {
+    var request = await fetch(AuthURL["NewOTP"], {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -396,7 +397,7 @@ document.getElementById("re-send").addEventListener("click", async () => {
   document.getElementById("spinner-resend").hidden = false;
 
   var email = document.getElementById("email-login").value;
-  var request = await fetch(ServerURL["NewOTP"], {
+  var request = await fetch(AuthURL["NewOTP"], {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -431,9 +432,14 @@ document.getElementById("re-send").addEventListener("click", async () => {
 });
 document
   .getElementById("verification-new-password")
-  .addEventListener("click", () => {
+  .addEventListener("click", async () => {
     // Call backend
+    var email = document.getElementById("email-login").value;
     var code = document.getElementById("OTP-reset-password").value;
+    var password = document.getElementById("new-password").value;
+    var ver_password = document.getElementById(
+      "confirmation-new-password",
+    ).value;
 
     var alert_code = document.getElementById("alert-otp-re-password");
 
@@ -441,15 +447,28 @@ document
 
     if (code.trim() == "") {
       alert_code.textContent = "Code OTP kosong";
-    }
-
-    if (code.trim() != "" && password.trim() != "" && verify.trim() != "") {
-      if (password != verify) {
-        alert_verify_password.textContent = "Password tidak sama";
-        return;
+    } else {
+      var request = await fetch(AuthURL["Change"], {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Email: email,
+          OTP: code,
+          Password: password,
+        }),
+      });
+      var response = await response.json();
+      if (response.Status === true) {
+        code.value = "";
+        password.value = "";
+        ver_password.value = "";
+        document.getElementById("popup-reset-password").style.display = "none";
+        document.getElementById("popup-login").style.display = "flex";
+      } else {
+        document.getElementById("alert-otp-re-password").textContent =
+          response.Detail;
       }
     }
-    return;
   });
 document.getElementById("eye-icon-login").addEventListener("click", () => {
   var eye = document.getElementById("eye-icon-login");

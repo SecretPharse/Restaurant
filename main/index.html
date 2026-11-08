@@ -202,13 +202,13 @@
         <div class="top">
             <span class="text1">Verifikasi Kode OTP</span>
             <span class="text2">Masukan 6 Digit Kode Verifikasi Yang Kami Kirim Ke Anda <span class="user-email"
-                    id="user-email"></span></span>
+                    id="user-email-re-password"></span></span>
         </div>
         <div class="body">
             <div class="otp">
                 <div class="input">
                     <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off" placeholder="Kirim Kode OTP">
                     <button class="re-send" id="re-send">Kirim ulang</button>
                     <button class="re-send-disable" id="re-send-disable">
                         <span class="spinner" id="spinner-resend" hidden></span>

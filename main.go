@@ -73,12 +73,12 @@ func main() {
 	server := http.FileServer(http.Dir("./main"))
 	http.Handle("/", server)
 
-	http.HandleFunc("/Register", Verify)
-	http.HandleFunc("/New-OTP", RequestNewOTP)
-	http.HandleFunc("/CancelRegister", CancelVerify)
-	http.HandleFunc("/Verification", CompleteEnrollment)
-	http.HandleFunc("/Login", Login)
-	http.HandleFunc("/Change-Password", ChangePassword)
+	http.HandleFunc("/Auth/Register", Verify)
+	http.HandleFunc("/Auth/New-OTP", RequestNewOTP)
+	http.HandleFunc("/Auth/CancelRegister", CancelVerify)
+	http.HandleFunc("/Auth/Verification", CompleteEnrollment)
+	http.HandleFunc("/Auth/Login", Login)
+	http.HandleFunc("/Auth/Change", ChangePassword)
 
 	format := fmt.Sprintf("Server http://%s", config.HOST)
 	fmt.Println(format)
@@ -471,7 +471,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func ChangePassword(w http.ResponseWriter, r *http.Request) {
 	var account API
-	var email string
+	var code string
 
 	w.Header().Set("Access-Control-Allow-Origin", config.HOST)
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -483,14 +483,24 @@ func ChangePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := database.QueryRow(context.Background(), "SELECT EMAIL FROM ACCOUNTS WHERE EMAIL=$1", account.Email).Scan(&email); errors.Is(err, pgx.ErrNoRows) {
-		json.NewEncoder(w).Encode(API{
-			Status: false,
-			Detail: "Email Tidak Terdaftar",
-		})
+	if err := database.QueryRow(context.Background(), "SELECT CODE FROM VERIFICATIONS WHERE EMAIL=$1", account.Email).Scan(&code); errors.Is(err, pgx.ErrNoRows) {
+		log.Println(err)
 		return
 	} else if err != nil {
 		log.Println(err)
+		return
+	}
+
+	valid, err := argon2id.ComparePasswordAndHash(account.OTP, code)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	if !valid {
+		json.NewEncoder(w).Encode(API{
+			Status: false,
+			Detail: "Kode OTP Salah",
+		})
 		return
 	}
 
@@ -500,7 +510,7 @@ func ChangePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	change, err := database.Exec(context.Background(), "UPDATE ACCOUNTS SET PASSWORD=$1 WHERE EMAIL=$2", new_password, email)
+	change, err := database.Exec(context.Background(), "UPDATE ACCOUNTS SET PASSWORD=$1 WHERE EMAIL=$2", new_password, account.Email)
 	if err != nil {
 		log.Println(err)
 		return
@@ -513,7 +523,7 @@ func ChangePassword(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(API{
 		Status: true,
 	})
-	format := fmt.Sprintf("%s Change Password", email)
+	format := fmt.Sprintf("%s Change Password", account.Email)
 	fmt.Println(format)
 }
 
