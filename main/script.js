@@ -5,9 +5,6 @@ var ServerURL = {
   Verification: "http://127.0.0.1:8080/Verification",
   Login: "http://127.0.0.1:8080/Login",
 };
-
-document.getElementById("reset-password").addEventListener("click", () => {
-});
 document.getElementById("login").addEventListener("click", async () => {
   var email = document.getElementById("email-login").value;
   var password = document.getElementById("password-login").value;
@@ -53,6 +50,88 @@ document.getElementById("login").addEventListener("click", async () => {
   }
   return;
 });
+document.getElementById("reset-password").addEventListener("click", () => {
+  document.getElementById("popup-login").style.display = "none";
+  document.getElementById("popup-new-password").style.display = "flex";
+});
+document.getElementById("back-to-login").addEventListener("click", () => {
+  document.getElementById("popup-new-password").style.display = "none";
+  document.getElementById("new-password").value = "";
+  document.getElementById("confirmation-new-password").value = "";
+  document.getElementById("popup-login").style.display = "flex";
+});
+document
+  .getElementById("new-password-input-input1-placeholder-eye")
+  .addEventListener("click", () => {
+    var input = document.getElementById("new-password");
+    var eye = document.getElementById(
+      "new-password-input-input1-placeholder-eye",
+    );
+    if (input.type == "password") {
+      input.type = "text";
+      eye.src = "assets/visibility_on.svg";
+    } else {
+      input.type = "password";
+      eye.src = "assets/visibility_off.svg";
+    }
+  });
+document
+  .getElementById("new-password-input-input2-placeholder-eye")
+  .addEventListener("click", () => {
+    var input = document.getElementById("confirmation-new-password");
+    var eye = document.getElementById(
+      "new-password-input-input2-placeholder-eye",
+    );
+    if (input.type == "password") {
+      input.type = "text";
+      eye.src = "assets/visibility_on.svg";
+    } else {
+      input.type = "password";
+      eye.src = "assets/visibility_off.svg";
+    }
+  });
+document
+  .getElementById("btn-confirmation-new-password")
+  .addEventListener("click", async () => {
+    // Call Backend
+    var email = document.getElementById("email-login").value;
+    var input1 = document.getElementById("new-password").value;
+    var input2 = document.getElementById("new-password").value;
+    var alert1 = document.getElementById("alert-new-password1");
+    var alert2 = document.getElementById("alert-new-password2");
+    var alert3 = document.getElementById("alert-email-login");
+    alert1.textContent = "";
+    alert2.textContent = "";
+    alert3.textContent = "";
+
+    if (input1.trim() === "") {
+      alert1.textContent = "Kata Sandi Kosong";
+    }
+    if (input2.trim() === "") {
+      alert2.textContent = "Konfirmasi Kata Sandi anda";
+    }
+    if (email.trim() === "") {
+      document.getElementById("popup-new-password").style.display = "none";
+      document.getElementById("popup-login").style.display = "flex";
+      alert3.textContent = "Email Kosong";
+    }
+
+    if (input1.trim() != "" && input2.trim() != "") {
+      var request = await fetch(ServerURL["NewOTP"], {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Email: email,
+        }),
+      });
+      var response = await request.json();
+      if (response.Status === true) {
+        document.getElementById("user-email").textContent = email;
+        document.getElementById("popup-new-password").style.display = "none";
+        document.getElementById("popup-reset-password").style.display = "flex";
+      }
+    }
+  });
 document.getElementById("to-register").addEventListener("click", () => {
   document.getElementById("email-login").value = "";
   document.getElementById("password-login").value = "";
@@ -295,11 +374,6 @@ document
 var count = 0;
 document.getElementById("re-send").addEventListener("click", () => {
   // Call Backend
-  count += 1;
-  if (count > 0) {
-    document.getElementById("re-send").textContent = "Kirim Ulang";
-  }
-
 });
 document
   .getElementById("verification-new-password")

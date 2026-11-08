@@ -165,65 +165,60 @@
     </div>
 
     <!-- New Password -->
-    <div class="new-password">
+    <div class="new-password" id="popup-new-password">
         <div class="top">
             <span class="text1">Perbarui Kata Sandi Baru</span>
         </div>
         <div class="input">
             <div class="input1">
                 <span>Kata Sandi Baru</span>
-                <input type="text" autocomplete="off" id="new-password" placeholder="Kata Sandi Baru">
+                <div class="placeholder">
+                    <input type="text" autocomplete="off" id="new-password" placeholder="Kata Sandi Baru">
+                    <img src="assets/visibility_off.svg" id="new-password-input-input1-placeholder-eye" alt="">
+                </div>
+                <span class="alert-text" id="alert-new-password1"></span>
             </div>
             <div class="input2">
                 <span> Konfirmasi Kata Sandi Baru</span>
-                <input type="text" autocomplete="off" id="new-password" placeholder="Konfirmasi Kata Sandi Baru">
+                <div class="placeholder">
+                    <input type="text" autocomplete="off" id="confirmation-new-password"
+                        placeholder="Konfirmasi Kata Sandi Baru">
+                    <img src="assets/visibility_off.svg" id="new-password-input-input2-placeholder-eye" alt="">
+                </div>
+                <span class="alert-text" id="alert-new-password2"></span>
             </div>
         </div>
-        <button class="">Konfirmasi Kata Sandi</button>
+        <div class="bottom">
+            <button class="confirmation-password" id="btn-confirmation-new-password">
+                <span id="text-confirmation-new-password">Konfirmasi Kata Sandi</span>
+                <span class="spinner" id="" hidden></span>
+            </button>
+            <span class="link" style="text-align: center;" id="back-to-login">Kembali</span>
+        </div>
     </div>
 
     <!-- Reset Password -->
     <div class="popup-reset-password" id="popup-reset-password">
-        <div class="container">
-            <div class="top">
-                <span class="text1">Verifikasi Kode OTP</span>
-                <span class="text2">Masukan 6 digit kode verifikasi Dan Perbarui Kata Sandi Anda</span>
-            </div>
-            <div class="body">
-                <div class="otp">
-                    <div class="input">
-                        <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
-                        <button class="re-send" id="re-send">Kirim</button>
-                        <button class="re-send-disable" id="re-send-disable"></button>
-                    </div>
-                    <span class="alert-text" id="alert-otp-re-password"></span>
+        <div class="top">
+            <span class="text1">Verifikasi Kode OTP</span>
+            <span class="text2">Masukan 6 digit kode verifikasi Yang Kami Kirim Ke Anda <span class="user-email"
+                    id="user-email"></span></span>
+        </div>
+        <div class="body">
+            <div class="otp">
+                <div class="input">
+                    <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+                    <button class="re-send" id="re-send">Kirim ulang</button>
+                    <button class="re-send-disable" id="re-send-disable"></button>
                 </div>
-                <div class="new-password">
-                    <span>Kata Sandi baru</span>
-                    <div class="placeholder">
-                        <input id="new-password" type="password" placeholder="Masukan kata sandi baru"
-                            id="new-password">
-                        <img id="eye-new-password" src="assets/visibility_off.svg" alt="">
-                    </div>
-                    <span class="alert-text" id="alert-re-password"></span>
-                </div>
-                <div class="confirmation-new-password">
-                    <span>Konfirmasi Kata Sandi baru</span>
-                    <div class="placeholder">
-                        <input id="confirmation-new-password" type="password" placeholder="Konfirmasi kata sandi baru"
-                            id="confirmation-new-password">
-                        <img id="eye-confirmation-new-password" src="assets/visibility_off.svg" alt="">
-                    </div>
-                    <span class="alert-text" id="alert-verify-password"></span>
-                </div>
+                <span class="alert-text" id="alert-otp-re-password"></span>
             </div>
-            <div class="bottom">
-                <button class="verify" id="verification-new-password">
-                    <span>Verifikasi & Perbarui</span>
-                </button>
-                <span class="link" id="back-login">Kembali</span>
-            </div>
+        </div>
+        <div class="bottom">
+            <button class="verify" id="verification-new-password">
+                <span>Verifikasi & Perbarui</span>
+            </button>
         </div>
     </div>
 </body>
