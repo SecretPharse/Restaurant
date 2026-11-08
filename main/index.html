@@ -191,7 +191,7 @@
         <div class="bottom">
             <button class="confirmation-password" id="btn-confirmation-new-password">
                 <span id="text-confirmation-new-password">Konfirmasi Kata Sandi</span>
-                <span class="spinner" id="" hidden></span>
+                <span class="spinner" id="spinner-new-password" hidden></span>
             </button>
             <span class="link" style="text-align: center;" id="back-to-login">Kembali</span>
         </div>
@@ -201,7 +201,7 @@
     <div class="popup-reset-password" id="popup-reset-password">
         <div class="top">
             <span class="text1">Verifikasi Kode OTP</span>
-            <span class="text2">Masukan 6 digit kode verifikasi Yang Kami Kirim Ke Anda <span class="user-email"
+            <span class="text2">Masukan 6 Digit Kode Verifikasi Yang Kami Kirim Ke Anda <span class="user-email"
                     id="user-email"></span></span>
         </div>
         <div class="body">
@@ -210,7 +210,10 @@
                     <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
                     <button class="re-send" id="re-send">Kirim ulang</button>
-                    <button class="re-send-disable" id="re-send-disable"></button>
+                    <button class="re-send-disable" id="re-send-disable">
+                        <span class="spinner" id="spinner-resend" hidden></span>
+                        <span id="re-send-disable-text"></span>
+                    </button>
                 </div>
                 <span class="alert-text" id="alert-otp-re-password"></span>
             </div>

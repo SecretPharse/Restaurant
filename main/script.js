@@ -117,6 +117,9 @@ document
     }
 
     if (input1.trim() != "" && input2.trim() != "") {
+      document.getElementById("btn-confirmation-new-password").disabled = true;
+      document.getElementById("text-confirmation-new-password").hidden = true;
+      document.getElementById("spinner-new-password").hidden = false;
       var request = await fetch(ServerURL["NewOTP"], {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -126,6 +129,11 @@ document
       });
       var response = await request.json();
       if (response.Status === true) {
+        document.getElementById("btn-confirmation-new-password").disabled =
+          false;
+        document.getElementById("text-confirmation-new-password").hidden =
+          false;
+        document.getElementById("spinner-new-password").hidden = true;
         document.getElementById("user-email").textContent = email;
         document.getElementById("popup-new-password").style.display = "none";
         document.getElementById("popup-reset-password").style.display = "flex";
@@ -371,36 +379,62 @@ document
       document.getElementById("alert-otp").textContent = response.Detail;
     }
   });
-var count = 0;
-document.getElementById("re-send").addEventListener("click", () => {
+document.getElementById("re-send").addEventListener("click", async () => {
   // Call Backend
+    var canrequest = document.getElementById("re-send");
+    canrequest.style.display = "none";
+    canrequest.disabled = true;
+
+    var cantrequest = document.getElementById("re-send-disable");
+    cantrequest.style.display = "flex";
+
+    document.getElementById("spinner-resend").hidden = false;
+
+    var email = document.getElementById("email-register").value;
+    var request = await fetch(ServerURL["NewOTP"], {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Email: email,
+      }),
+    });
+
+    var response = await request.json();
+
+    if (response.Status === true) {
+      var time = 180;
+      const timer = setInterval(() => {
+        document.getElementById("spinner-resend").hidden = true;
+        var output = document.getElementById("re-send-disable-text");
+        const m = String(Math.floor(time / 60)).padStart(2, "0");
+        const s = String(time % 60).padStart(2, "0");
+        output.textContent = `${m}:${s}`;
+
+        if (time === 0) {
+          clearInterval(timer);
+          canrequest.style.display = "block";
+          canrequest.disabled = false;
+          cantrequest.style.display = "none";
+          output.textContent = "";
+        }
+        time--;
+      }, 1000);
+    } else if (response.Status === false) {
+      document.getElementById("alert-otp-re-password").textContent = response.Detail;
+    }
 });
 document
   .getElementById("verification-new-password")
   .addEventListener("click", () => {
     // Call backend
     var code = document.getElementById("OTP-reset-password").value;
-    var password = document.getElementById("new-password").value;
-    var verify = document.getElementById("confirmation-new-password").value;
 
     var alert_code = document.getElementById("alert-otp-re-password");
-    var alert_new_password = document.getElementById("alert-re-password");
-    var alert_verify_password = document.getElementById(
-      "alert-verify-password",
-    );
 
     alert_code.textContent = "";
-    alert_new_password.textContent = "";
-    alert_verify_password.textContent = "";
 
     if (code.trim() == "") {
       alert_code.textContent = "Code OTP kosong";
-    }
-    if (password.trim() == "") {
-      alert_new_password.textContent = "Password baru kosong";
-    }
-    if (verify.trim() == "") {
-      alert_verify_password.textContent = "Confirmasi Password anda";
     }
 
     if (code.trim() != "" && password.trim() != "" && verify.trim() != "") {

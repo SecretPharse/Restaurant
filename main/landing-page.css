@@ -544,7 +544,7 @@ body {
 /* Reset Password */
 .popup-reset-password {
   position: relative;
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;
@@ -684,11 +684,14 @@ body {
   font-size: 16px;
   font-weight: 500;
 }
+.popup-reset-password .bottom .verify:active {
+  transform: scale(.99);
+}
 
 /* PopUp New Passowrd */
 .new-password {
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   padding: 3rem;
   background-color: #ffffff;

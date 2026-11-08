@@ -78,6 +78,7 @@ func main() {
 	http.HandleFunc("/CancelRegister", CancelVerify)
 	http.HandleFunc("/Verification", CompleteEnrollment)
 	http.HandleFunc("/Login", Login)
+	http.HandleFunc("/Change-Password", ChangePassword)
 
 	format := fmt.Sprintf("Server http://%s", config.HOST)
 	fmt.Println(format)
