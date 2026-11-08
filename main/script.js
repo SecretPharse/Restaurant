@@ -150,7 +150,8 @@ document
           response.Detail;
         document.getElementById("btn-confirmation-new-password").disabled =
           false;
-        document.getElementById("text-confirmation-new-password").hidden = false;
+        document.getElementById("text-confirmation-new-password").hidden =
+          false;
         document.getElementById("spinner-new-password").hidden = true;
       }
     }
@@ -265,7 +266,6 @@ document.getElementById("register").addEventListener("click", async () => {
       confirmation_alert.textContent = "Password Salah";
       return;
     }
-
     document.getElementById("register").disabled = true;
     document.getElementById("text-btn-register").hidden = true;
     document.getElementById("spinner-register").hidden = false;
@@ -280,8 +280,7 @@ document.getElementById("register").addEventListener("click", async () => {
     var response = await request.json();
 
     if (response.Status === true) {
-      document.getElementById("text-btn-register").hidden = false;
-      document.getElementById("spinner-register").hidden = true;
+      document.getElementById("popup-register-page2").style.display = "none";
       document.getElementById("popup-OTP").style.display = "flex";
       document.getElementById("user-email").textContent = response.Detail;
     } else if (response.Status === false) {

@@ -13,12 +13,12 @@
 
 <body>
     <!-- Login -->
-    <div class="popup-login" id="popup-login">
+    <div class="login" id="popup-login">
         <div class="top">
             <span class="text1">Selamat Datang Kembali</span>
             <span class="text2">Masuk ke akun anda untuk melanjutkan</span>
         </div>
-        <div class="body">
+        <div class="middle">
             <div class="email">
                 <span>Alamat Email</span>
                 <input type="email" id="email-login" autocomplete="off" placeholder="Email">
@@ -35,7 +35,7 @@
         </div>
         <div class="bottom">
             <span class="link" style="margin: 0 0 0 auto;" id="reset-password">Lupa kata sandi?</span>
-            <button class="login" id="login">
+            <button class="submit" id="login">
                 <span id="text-btn-login">Masuk ke Akun</span>
                 <span class="spinner" id="spinner-login" hidden></span>
             </button>
@@ -44,12 +44,12 @@
     </div>
 
     <!-- Register Page 1-->
-    <div class="popup-register-page1" id="popup-register-page1">
+    <div class="register-page1" id="popup-register-page1">
         <div class="top">
             <span class="text1">Formulir Pendaftaran</span>
             <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
         </div>
-        <div class="body">
+        <div class="middle">
             <div class="name">
                 <span>Nama Restoran</span>
                 <input type="text" id="name-register" autocomplete="off" placeholder="Contoh: Krusty Krab, Chambucket">
@@ -72,31 +72,29 @@
             </div>
         </div>
         <div class="bottom">
-            <div class="next" id="next-to-page2">Lanjut</div>
+            <div class="next-page" id="next-to-page2">Lanjut</div>
         </div>
         <span class="to-login">Sudah memiliki akun? <span class="link" id="to-login">Masuk di sini</span></span>
     </div>
 
     <!-- Register Page 2 -->
-    <div class="popup-register-page2" id="popup-register-page2">
+    <div class="register-page2" id="popup-register-page2">
         <div class="top">
             <span class="text1">Formulir Pendaftaran</span>
             <span class="text2">Mulai perjalanan anda bersama kami secara gratis</span>
         </div>
-        <div class="body">
-            <div class="time">
-                <div class="times">
-                    <div class="open">
-                        <span>Jam Buka</span>
-                        <input type="time" id="open-time-register">
-                    </div>
-                    <div class="close">
-                        <span>Jam Tutup</span>
-                        <input type="time" id="close-time-register">
-                    </div>
+        <div class="middle">
+            <div class="times">
+                <div class="open">
+                    <span>Jam Buka</span>
+                    <input type="time" id="open-time-register">
                 </div>
-                <span class="alert-text" id="alert-time-register"></span>
+                <div class="close">
+                    <span>Jam Tutup</span>
+                    <input type="time" id="close-time-register">
+                </div>
             </div>
+            <span class="alert-text" id="alert-time-register"></span>
             <div class="worker">
                 <span>Jumlah Pekerja</span>
                 <input type="number" id="num-worker-register" placeholder="Jumlah seluruh pekerja di lokasi">
@@ -120,7 +118,7 @@
             </div>
             <div class="bottom">
                 <span>Dengan Mengklik Daftar Saya Menyetujui <span class="link">Syarat & Ketentuan</span></span>
-                <button class="register" id="register">
+                <button class="submit" id="register">
                     <span id="text-btn-register">Daftar Akun Baru</span>
                     <span class="spinner" id="spinner-register" hidden></span>
                 </button>
@@ -130,36 +128,33 @@
     </div>
 
     <!-- OTP -->
-    <div class="popup-OTP" id="popup-OTP">
-        <div class="container">
-            <div class="top">
-                <span class="text1">Verifikasi Kode OTP</span>
-                <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda <span
-                        class="user-email" id="user-email"></span></span>
-            </div>
-            <div class="body">
-                <div class="otp">
-                    <div class="input">
-                        <input id="OTP" type="text" inputmode="numeric" maxlength="6"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
-                        <button class="re-send" id="re-send-register">Kirim ulang</button>
-                        <button class="re-send-register" id="re-send-time" hidden>
-                            <span class="spinner" id="spinner-resend-register"></span>
-                            <span id="re-send-time-text"></span>
-                        </button>
-                    </div>
-                    <div class="alert-text" id="alert-otp"></div>
+    <div class="OTP-Register" id="popup-OTP">
+        <div class="top">
+            <span class="text1">Verifikasi Kode OTP</span>
+            <span class="text2">Masukan 6 digit kode verifikasi yang telah kami kirimkan ke email Anda <span
+                    class="user-email" id="user-email"></span></span>
+        </div>
+        <div class="middle">
+            <div class="otp">
+                <div class="input">
+                    <input id="OTP" type="text" inputmode="numeric" maxlength="6"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+                    <button class="re-send" id="re-send-register">Kirim ulang</button>
+                    <button class="re-send-register" id="re-send-time" hidden>
+                        <span class="spinner" id="spinner-resend-register"></span>
+                        <span id="re-send-time-text"></span>
+                    </button>
                 </div>
+                <div class="alert-text" id="alert-otp"></div>
             </div>
-            <div class="bottom">
-                <div class="verify" id="verify">
-                    <span>Verifikasi & Lanjutkan</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="M10.6,16.6l7.05-7.05l-1.4-1.4L10.6,13.8L7.75,10.95l-1.4,1.4L10.6,16.6ZM12,22q-2.07,0-3.9-0.79q-1.82-0.79-3.17-2.14Q3.58,17.73 2.79,15.9T2,12Q2,9.92 2.79,8.1Q3.58,6.27 4.93,4.93Q6.28,3.57 8.1,2.79Q9.93,2 12,2t3.9,0.79t3.17,2.14q1.35,1.35 2.14,3.17Q22,9.92 22,12t-0.79,3.9t-2.14,3.17q-1.35,1.35-3.17,2.14T12,22Zm0-2q3.35,0 5.68-2.32T20,12T17.68,6.32T12,4T6.33,6.32T4,12t2.33,5.68T12,20Zm0-8Z" />
-                    </svg>
-                </div>
+        </div>
+        <div class="bottom">
+            <div class="submit" id="verify">
+                <span>Verifikasi & Lanjutkan</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="24px" width="24px" fill="#FFFFFF">
+                    <path
+                        d="M10.6,16.6l7.05-7.05l-1.4-1.4L10.6,13.8L7.75,10.95l-1.4,1.4L10.6,16.6ZM12,22q-2.07,0-3.9-0.79q-1.82-0.79-3.17-2.14Q3.58,17.73 2.79,15.9T2,12Q2,9.92 2.79,8.1Q3.58,6.27 4.93,4.93Q6.28,3.57 8.1,2.79Q9.93,2 12,2t3.9,0.79t3.17,2.14q1.35,1.35 2.14,3.17Q22,9.92 22,12t-0.79,3.9t-2.14,3.17q-1.35,1.35-3.17,2.14T12,22Zm0-2q3.35,0 5.68-2.32T20,12T17.68,6.32T12,4T6.33,6.32T4,12t2.33,5.68T12,20Zm0-8Z" />
+                </svg>
             </div>
         </div>
     </div>
@@ -208,7 +203,8 @@
             <div class="otp">
                 <div class="input">
                     <input id="OTP-reset-password" type="text" inputmode="numeric" maxlength="6"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off" placeholder="Kirim Kode OTP">
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off"
+                        placeholder="Kirim Kode OTP">
                     <button class="re-send" id="re-send">Kirim ulang</button>
                     <button class="re-send-disable" id="re-send-disable">
                         <span class="spinner" id="spinner-resend" hidden></span>
