@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    
+    <div class="login">
+        <div class="header">
+            <span class="text1">Masuk</span>
+            <span class="text2">Selamat datang kembali</span>
+        </div>
+        <div class="middle">
+            <div class="email">
+                <span>Email</span>
+                <input type="email" placeholder="Masukan Email" autocomplete="off">
+            </div>
+            <div class="password">
+                <span>Kata Sandi</span>
+                <div class="sensor">
+                    <input type="password" placeholder="Masukan Kata Sandi">
+                    <img src="assets/visibility_off.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <span class="link-global" style="margin: 0 0 0 auto;">Lupa kata sandi?</span>
+            <button class="submit">
+                <span>Masuk</span>
+                <div class="spinner" hidden></div>
+            </button>
+            <span>Belum punya akun? <span class="link-global">Daftar Sekarang</span></span>
+        </div>
+    </div>
 </body>
+
 </html>
