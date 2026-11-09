@@ -20,7 +20,7 @@ loginToRegister.addEventListener("click", () => {
     registerPage.style.display = "flex";
 })
 
-// Resgister Page 1
+// Resgister
 const registerPage = document.getElementById("register");
 const registerToLogin = document.getElementById("register-to-login");
 

@@ -41,8 +41,8 @@
         </div>
     </div>
 
-    <!-- Register Page 1 -->
-    <div class="register-page1" id="register">
+    <!-- Register -->
+    <div class="register" id="register">
         <div class="header">
             <span class="text1">Daftar</span>
             <span class="text2">Mulai dengan mudah bersama kami</span>
@@ -72,6 +72,25 @@
             <span>Sudah punya akun? <span class="link-global" id="register-to-login">Masuk Sekarang</span></span>
         </div>
     </div>
+
+    <!-- Verification Account -->
+    <div class="verify">
+        <div class="header">
+            <span class="text1">Verifikasi Akun</span>
+            <span class="text2">Tulis kode OTP yang kami kirim ke anda <span id="email-user"></span></span>
+        </div>
+        <div class="middle">
+            <input type="text" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Kode OTP">
+            <button class="new-otp">Kirim ulang</button>
+        </div>
+        <div class="bottom">
+            <button class="submit">
+                <span>Verifikasi</span>
+                <div class="spinner" hidden></div>
+            </button>
+        </div>
+    </div>
+
 
 </body>
 <script src="script.js"></script>
