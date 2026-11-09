@@ -1,4 +1,4 @@
-var AuthURL = {
+const AuthURL = {
   Register: "http://127.0.0.1:8080/Auth/Register",
   NewOTP: "http://127.0.0.1:8080/Auth/New-OTP",
   CancelRegister: "http://127.0.0.1:8080/Auth/CancelRegister",
@@ -6,8 +6,11 @@ var AuthURL = {
   Login: "http://127.0.0.1:8080/Auth/Login",
   Change: "http://127.0.0.1:8080/Auth/Change",
 };
-document.getElementById("login").addEventListener("click", async () => {
-  var email = document.getElementById("email-login").value;
+
+
+const emailLogin = document.getElementById("email-login");
+const login = document.getElementById("login");
+login.addEventListener("click", async () => {
   var password = document.getElementById("password-login").value;
   var email_alert = document.getElementById("alert-email-login");
   var password_alert = document.getElementById("alert-password-login");
@@ -21,7 +24,7 @@ document.getElementById("login").addEventListener("click", async () => {
     password_alert.textContent = "Kata Sandi kosong";
   }
   if (email.trim() != "" && password.trim() != "") {
-    document.getElementById("login").disabled = true;
+    login.disabled = true;
     document.getElementById("text-btn-login").hidden = true;
     document.getElementById("spinner-login").hidden = false;
 
@@ -44,7 +47,7 @@ document.getElementById("login").addEventListener("click", async () => {
       } else if (response.Type == "Password") {
         password_alert.textContent = response.Detail;
       }
-      document.getElementById("login").disabled = false;
+      login.disabled = false;
       document.getElementById("text-btn-login").hidden = false;
       document.getElementById("spinner-login").hidden = true;
     }
@@ -513,3 +516,5 @@ document
       eye.src = "assets/visibility_off.svg";
     }
   });
+
+// perbaiki kode javascript agar mudah di pelihara
