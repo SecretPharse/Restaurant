@@ -12,7 +12,8 @@
 </head>
 
 <body>
-    <div class="login">
+    <!-- Login -->
+    <div class="login" id="login">
         <div class="header">
             <span class="text1">Masuk</span>
             <span class="text2">Selamat datang kembali</span>
@@ -25,8 +26,8 @@
             <div class="password">
                 <span>Kata Sandi</span>
                 <div class="sensor">
-                    <input type="password" placeholder="Masukan Kata Sandi">
-                    <img src="assets/visibility_off.svg" alt="">
+                    <input id="password-login" type="password" placeholder="Masukan Kata Sandi">
+                    <img id="sensor-login" src="assets/visibility_off.svg">
                 </div>
             </div>
         </div>
@@ -36,9 +37,43 @@
                 <span>Masuk</span>
                 <div class="spinner" hidden></div>
             </button>
-            <span>Belum punya akun? <span class="link-global">Daftar Sekarang</span></span>
+            <span>Belum punya akun? <span class="link-global" id="login-to-register">Daftar Sekarang</span></span>
         </div>
     </div>
+
+    <!-- Register Page 1 -->
+    <div class="register-page1" id="register">
+        <div class="header">
+            <span class="text1">Daftar</span>
+            <span class="text2">Mulai dengan mudah bersama kami</span>
+        </div>
+        <div class="middle">
+            <div class="name">
+                <span>Nama</span>
+                <input type="text" placeholder="Nama">
+            </div>
+            <div class="email">
+                <span>Kata Sandi</span>
+                <input id="" type="email" placeholder="email" autocomplete="off">
+            </div>
+            <div class="phone">
+                <span>No Telp</span>
+                <input id="" type="number" placeholder="nomor telephone">
+            </div>
+            <div class="address">
+                <span>Alamat</span>
+                <input id="" type="text" placeholder="Alamat">
+            </div>
+        </div>
+        <div class="bottom">
+            <button class="submit">
+                <span>Lanjut</span>
+            </button>
+            <span>Sudah punya akun? <span class="link-global" id="register-to-login">Masuk Sekarang</span></span>
+        </div>
+    </div>
+
 </body>
+<script src="script.js"></script>
 
 </html>
