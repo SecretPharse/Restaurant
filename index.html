@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verifikasi OTP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Login -->
+    <div class="login" id="login">
+        <div class="title">Masuk</div>
+        <div class="subtitle">Masuk untuk melanjutkan ke akun Anda.</div>
+
+        <div class="login-form">
+            <div class="field">
+                <span class="field-name">Email</span>
+                <input class="input" id="email" name="email" type="email" placeholder="nama@email.com"
+                    autocomplete="off" />
+            </div>
+            <div class="field">
+                <span class="field-name">Password</span>
+                <input class="input" id="password" name="password" type="password" placeholder="Masukkan password"
+                    autocomplete="off" />
+            </div>
+            <span class="forgot">Lupa password?</span>
+
+            <button class="button" type="button">
+                <span>Masuk</span>
+                <div class="spinner" hidden></div>
+            </button>
+        </div>
+
+        <div class="signup"><span>Belum punya akun? </span><span class="link" id="login-to-register">Daftar
+                sekarang</span></div>
+    </div>
+
+    <!-- Register -->
+    <div class="register" id="register">
+        <div class="register-heading">
+            <div class="title">Buat akun</div>
+            <div class="subtitle">Lengkapi data berikut untuk memulai.</div>
+        </div>
+
+        <div class="register-fields">
+            <div class="field">
+                <span class="field-name">Nama lengkap</span>
+                <input class="input" id="register-name" name="name" type="text" placeholder="Nama lengkap Anda"
+                    autocomplete="off" />
+            </div>
+            <div class="field">
+                <span class="field-name">Email</span>
+                <input class="input" id="register-email" name="email" type="email" placeholder="nama@email.com"
+                    autocomplete="off" />
+            </div>
+            <div class="field">
+                <span class="field-name">Nomor telepon</span>
+                <input class="input" id="register-phone" name="phone" type="tel" placeholder="08xxxxxxxxxx"
+                    autocomplete="off" />
+            </div>
+            <div class="field">
+                <span class="field-name">Alamat</span>
+                <input class="input" id="register-address" name="address" type="text" placeholder="Alamat lengkap"
+                    autocomplete="off" />
+            </div>
+            <button class="button" type="button">
+                <span>Daftar</span>
+                <div class="spinner" hidden></div>
+            </button>
+        </div>
+
+        <div class="signup">
+            <span>Sudah punya akun? <span class="link" id="register-to-login">Masuk</span></span>
+        </div>
+    </div>
+
+    <!-- Verification OTP -->
+    <div class="otp">
+        <div class="otp-title">Verifikasi akun</div>
+        <div class="otp-description">Masukkan 6 digit kode yang kami kirim ke email atau nomor telepon Anda.</div>
+
+        <div class="otp-code" aria-label="Kode verifikasi 6 digit">
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" />
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" />
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" />
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5" />
+            <input class="otp-input" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6" />
+        </div>
+
+        <button class="otp-button" type="button">
+            <span>Verifikasi</span>
+            <div class="spinner" hidden></div>
+        </button>
+
+        <div class="otp-resend">
+            <span class="otp-resend-label">Belum menerima kode?</span>
+            <span class="otp-resend-action">Kirim ulang</span>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+
+</html>

@@ -1,3 +1,0 @@
-minimalis
-background #FFFFFF
-button #2563EB
