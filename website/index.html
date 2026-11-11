@@ -17,13 +17,16 @@
         <div class="login-form">
             <div class="field">
                 <span class="field-name">Email</span>
-                <input class="input" id="email" name="email" type="email" placeholder="nama@email.com"
+                <input class="input" id="email-login" name="email-login" type="email" placeholder="nama@email.com"
                     autocomplete="off" />
             </div>
             <div class="field">
                 <span class="field-name">Password</span>
-                <input class="input" id="password" name="password" type="password" placeholder="Masukkan password"
-                    autocomplete="off" />
+                <div class="sensor">
+                    <input class="input" id="password-login" name="password-login" type="password"
+                        placeholder="Masukkan password" autocomplete="off" />
+                    <img class="eye" src="assets/visibility_off.svg" id="visibility-login">
+                </div>
             </div>
             <span class="forgot">Lupa password?</span>
 
@@ -56,14 +59,17 @@
                     autocomplete="off" />
             </div>
             <div class="field">
-                <span class="field-name">Nomor telepon</span>
-                <input class="input" id="register-phone" name="phone" type="tel" placeholder="08xxxxxxxxxx"
-                    autocomplete="off" />
-            </div>
-            <div class="field">
                 <span class="field-name">Alamat</span>
                 <input class="input" id="register-address" name="address" type="text" placeholder="Alamat lengkap"
                     autocomplete="off" />
+            </div>
+            <div class="field">
+                <span class="field-name">Buat Password</span>
+                <div class="sensor">
+                    <input class="input" id="password-register" name="password-register" type="password" placeholder="Buat Password"
+                        autocomplete="off" />
+                    <img class="eye" src="assets/visibility_off.svg" id="visibility-register">
+                </div>
             </div>
             <button class="button" type="button">
                 <span>Daftar</span>

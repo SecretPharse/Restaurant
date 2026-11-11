@@ -98,7 +98,12 @@ body {
   font-size: 1rem;
   font-weight: 600;
 }
-
+.login .sensor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 10%0%;
+}
 .login .input {
   width: 100%;
   min-height: 48px;
@@ -113,6 +118,11 @@ body {
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
+}
+
+.login .sensor .eye {
+  position: absolute;
+  right: 15px;
 }
 
 .login .input::placeholder {
@@ -225,7 +235,12 @@ body {
   font-size: 1rem;
   font-weight: 600;
 }
-
+.register .sensor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 .register .input {
   width: 100%;
   min-height: 48px;
@@ -244,6 +259,11 @@ body {
 
 .register .input::placeholder {
   color: #a3a3a3;
+}
+
+.register .eye {
+  position: absolute;
+  right: 15px;
 }
 
 .register .input:hover {
